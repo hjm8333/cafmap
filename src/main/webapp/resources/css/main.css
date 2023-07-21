@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+/* ★ 게시글 쓰기 */
+.write {
+	padding: 20px;
+	text-align: center;
+	border: 1px solid #eee;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+.write:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+
+/* ★ 게시글 컨텐츠 */
+.content-wrapper {
+	padding: 30px;
+	margin: 20px 0;
+	position: relative;
+	
+	border: 1px solid #eee;
+	border-radius: 10px;
+}
+.content-wrapper > .content-header {
+	position: relative;
+	display: flex;
+	padding: 10px;
+	
+	border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+.content-wrapper > .content-header:not(:first-child) ,
+.content-wrapper > .content-header font {
+	margin-left: 20px;
+}
+.content-wrapper > .content-header > p:last-child  {
+	position: absolute;
+	right: 5px; 
+}
+
+
+.content-wrapper > .content-body {
+	padding: 10px;
+	white-space: pre;
+	min-height: 600px;
+	
+	margin-top: 20px;
+	margin-bottom: 40px;
+	
+    overflow-x: hidden; 
+}
+ 
+.content-wrapper > .content-footer {
+	padding20px;
+	display: flex;
+	justify-content: space-between;
+	
+}
+.content-wrapper > .content-footer > button {
+	height: 60px;
+	background: none;
+	border: none;
+	color: grey;
+}
+.content-wrapper > .content-footer > button:nth-child(1) {
+	flex: 1;
+	margin-right: 20px; 
+}
+.content-wrapper > .content-footer > button:nth-child(2) {
+	flex: 3;
+}
+
+
+.content-wrapper > .content-header > p ,
+.content-wrapper > .content-header > .btn-group {
+	position: relative;
+	top: 5px;
+}
+
+.content-wrapper > .content-header > .btn-group {
+			position: absolute; 
+			bottom: 20px; 
+			right: 10px; 
+			height: 40px; 
+			background-color: white;
+ }
+
+
+.content-wrapper > .content-header > .btn-group > button {
+			border: none; 
+			background-color: white;
+ }
+ 
+.content-wrapper > .content-header > .btn-group > .dropdown-menu {
+	padding: 10px;
+}
+
+
+
+
+
+
+/* 모달창 */
+#swal2-html-container > div .profileImageIcon {
+	display: inline-block;
+	position: relative;;
+	top: 8px;
+	margin-right: 5px;
+	background-size: cover;
+	background-position: center;
+}
+
+.feed-comment-wrapper {
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+.feed-comment-wrapper::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+
+#swal2-html-container > div {
+	max-height: 700px;
+}
+
+#swal2-html-container {
+	position: relative;
+}
+
