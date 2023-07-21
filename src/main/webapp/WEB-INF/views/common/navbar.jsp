@@ -12,14 +12,14 @@
  
 <nav> <!-- aws 배포할땐  앞에 /smile 빼고 배포하기 ★ -->	
   <div class="position-relative" >
-      <img class="nav-btn title-banner mb-5" id="main/list" src="/webapp/resources/imgs/title.png" class="title-banner mb-5" style="cursor: pointer;">
-    <ul class="desktop-nav">
-<%--      <li><a class="nav-btn" id="main/list"><i class="fa-solid fa-house"></i> --%>
-<%--      메인</a></li>--%>
-     <li><a class="nav-btn" id="trade/list"><i class="fa-solid fa-tag"></i>
-      중고 거래</a></li>
-     <li><a class="nav-btn" id="notice/list"><i class="fa-solid fa-tower-cell"></i>
-      공지사항 <span id="newNoticeCheck" class="badge bg-primary">New</span></a></li>
+      <img class="nav-btn title-banner" id="main/list" src="/resources/imgs/title.png" class="title-banner" style="cursor: pointer;">
+    <ul class="desktop-nav pl-0">
+      <li><a class="nav-btn" id="main/list"><i class="fa-solid fa-mug-saucer"></i>
+      CafeMap</a></li>
+<%--     <li><a class="nav-btn" id="trade/list"><i class="fa-solid fa-tag"></i>--%>
+<%--      중고 거래</a></li>--%>
+<%--     <li><a class="nav-btn" id="notice/list"><i class="fa-solid fa-tower-cell"></i>--%>
+<%--      공지사항 <span id="newNoticeCheck" class="badge bg-primary">New</span></a></li>--%>
      <li><a class="nav-btn" id="user/info"><i class="fa-solid fa-circle-user"></i>
       내 정보</a></li>
       
