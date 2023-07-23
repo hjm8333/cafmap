@@ -19,15 +19,15 @@ public class MemServiceImpl implements MemService{
 	private MemDao dao;
 	
 	@Override
-	public ArrayList<MemDto> login(HashMap<String, String> param) {
+	public MemDto login(HashMap<String, String> param) {
 
 		log.info("======================== MemServiceImpl.login() start ========================");
 		
-		ArrayList<MemDto> dtos = dao.login(param);
+		MemDto dto = dao.login(param);
 		
 		log.info("======================== MemServiceImpl.login() end ========================");
 		
-		return dtos;
+		return dto;
 	}
 
 	@Override

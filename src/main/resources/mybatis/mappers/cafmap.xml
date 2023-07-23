@@ -7,11 +7,11 @@
 <mapper namespace="com.cafmap.dao.MemDao">
 
     <select id="login" parameterType="hashmap" resultType="com.cafmap.dto.MemDto">
-        select mem_pwd from mvc_member where mem_uid = #{mem_uid}
+        select * from user where id = #{id}
     </select>
     
     <insert id="write" parameterType="hashmap">
-   		insert into mvc_member values(#{mem_uid},#{mem_pwd},#{mem_name})
+   		insert into user (id, pwd, nickname, tel, imgPath) values(#{id}, #{pwd}, #{nickname}, #{tel}, #{imgPath})
     </insert>
 
 </mapper>

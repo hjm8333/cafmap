@@ -9,6 +9,6 @@ import com.cafmap.dto.MemDto;
 
 @Mapper
 public interface MemDao {
-	public ArrayList<MemDto> login(HashMap<String, String> param);
+	public MemDto login(HashMap<String, String> param);
 	public void write(HashMap<String, String> param);
 }

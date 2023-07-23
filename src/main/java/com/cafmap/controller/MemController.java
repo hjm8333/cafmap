@@ -32,12 +32,12 @@ public class MemController {
 		log.info("@# login_yn");
 		
 		
-		ArrayList<MemDto> dtos = service.login(param);
-		String pwd = param.get("mem_pwd");
-		
-		if(dtos.isEmpty()) {
-			return "redirect:login";			
-		}else if(pwd.equals(dtos.get(0).getMem_pwd())){
+		MemDto dto = service.login(param);
+		String pwd = param.get("pwd");
+
+		if(dto == null) {
+			return "redirect:login";
+		}else if(pwd.equals(dto.getPwd())){
 			return "redirect:login_ok";
 		}else {
 			return "redirect:login";
@@ -61,7 +61,7 @@ public class MemController {
 	@RequestMapping("/write")
 	public String write(@RequestParam HashMap<String, String> param) {
 		log.info("@# write");
-		
+
 		service.write(param);
 		
 		return "redirect:login";

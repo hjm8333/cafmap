@@ -11,8 +11,8 @@
 	<!-- -------------------------------------------------------------------------- -->
 
 	<form method="post" action="login_yn">
-		<p>ID <input type="text" name="mem_uid" size="15"></p>
-		<p>비번 <input type="password" name="mem_pwd" size="15"></p>
+		<p>ID <input type="text" name="id" size="15"></p>
+		<p>비번 <input type="password" name="pwd" size="15"></p>
 		<p><input type="submit" value="로그인"> <input type="reset" value="리셋">
 			&nbsp;<input type="button" value="회원가입" onclick="location.href='register'">
 		</p>

@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemDto {
-	private String mem_uid;
-	private String mem_pwd;
-	private String mem_name;
+	private int userId;
+	private String id;
+	private String pwd;
+	private String nickname;
+	private String tel;
+	private String imgPath;
 }
