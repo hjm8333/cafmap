@@ -20,13 +20,20 @@ public class MemController {
 	@Autowired
 	private MemService service;
 		
+	@RequestMapping("/home")
+	public String home() {
+		log.info("@# home");
+		
+		return "home";
+	}
+
 	@RequestMapping("/login")
 	public String login() {
 		log.info("@# login");
-		
+
 		return "login";
 	}
-	
+
 	@RequestMapping("/login_yn")
 	public String login_yn(@RequestParam HashMap<String, String> param) {
 		log.info("@# login_yn");

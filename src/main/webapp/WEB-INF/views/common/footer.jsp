@@ -2,11 +2,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <footer>
 <p>Copyright (c) 2023 Cafap All right reserved.</p>
-
-
 </footer>
 
-
-
-
-<style> @import "../resources/css/common/footer.css";</style>
+<style>
+    footer {
+        /*transform : translateY(-100%);*/
+        position : relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 150px;
+        background-color: #eee;
+    }
+</style>

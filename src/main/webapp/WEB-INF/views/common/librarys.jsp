@@ -7,11 +7,11 @@
 
 <!-- 제이쿼리  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<!--  폰트어썸 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!--  부트스트랩 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<!--  폰트어썸 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!--  애니메이트 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- 스윗모달 -->
@@ -37,32 +37,33 @@
 * {
  	margin: 0px;
  	padding: 0px;
- 	text-decoration: none;  	
+ 	text-decoration: none;
  	list-style: none;
   }
-a { 
-	color: black; 
+a {
+	color: black;
 	text-decoration: none;
 }
-section { 
+section {
 	padding: 10px;
-	width: 100%;  
-	max-width: 960px; 
-	min-height: 100vh; 
-	margin: 100px auto; 
-	
+	width: 100%;
+	max-width: 960px;
+	min-height: 100vh;
+	margin: 100px auto;
+
 }
-section 
+section
 table, th, td, a, p, div, span, li, button, input, textarea, select, option, h1, h2, h3, h4, h5, h6 {
 	font-family: 'Jal_Onuel'
 }
 
 .content-wrapper iframe {
 	width: 100%;
-	min-height: 500px;	
+	min-height: 500px;
 }
+
 .profileImageIcon {
-	
+
     width: 35px;
     height: 35px;
     background-size: contain;
@@ -70,17 +71,12 @@ table, th, td, a, p, div, span, li, button, input, textarea, select, option, h1,
     border: 2px solid white;
     border-radius: 25px;
 	margin-right: 15px;
-	
+
 }
 
-body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) { overflow : auto !important; }
-body.swal2-shown { padding-right: 0px !important; }
-.trade-info-wrapper { max-height: 600px; }
-
-/*
-body{ -ms-overflow-style: none; } 
-::-webkit-scrollbar { display: none; }
-*/
+/*body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) { overflow : auto !important; }*/
+/*body.swal2-shown { padding-right: 0px !important; }*/
+/*.trade-info-wrapper { max-height: 600px; }*/
 
   
 </style>
