@@ -120,10 +120,8 @@
         </div>
         <div class="collapse navbar-collapse navbar-right" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Menu</a></li>
-                <li><a href="#">Reserve</a></li>
+                <li><a href="home">Map</a></li>
+                <li><a href="login">MyInfo</a></li>
             </ul>
         </div>
     </div>

@@ -52,7 +52,7 @@
 				'        </div>' +
 				'        <div class="body">' +
 				'            <div class="img">' +
-				'                <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/thumnail.png" width="73" height="70">' +
+				'                <img src="../../resources/imgs/alookat.jpg" width="73" height="70">' +
 				'           </div>' +
 				'            <div class="desc">' +
 				'                <div class="ellipsis">부산 동래구 충렬대로272번길 15 2층 202호</div>' +
