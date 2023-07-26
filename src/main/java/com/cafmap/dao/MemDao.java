@@ -1,11 +1,9 @@
 package com.cafmap.dao;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.cafmap.dto.MemDto;
 import org.apache.ibatis.annotations.Mapper;
 
-import com.cafmap.dto.MemDto;
+import java.util.HashMap;
 
 @Mapper
 public interface MemDao {

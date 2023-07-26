@@ -19,13 +19,6 @@ public class MemController {
 	
 	@Autowired
 	private MemService service;
-		
-	@RequestMapping("/home")
-	public String home() {
-		log.info("@# home");
-		
-		return "home";
-	}
 
 	@RequestMapping("/login")
 	public String login() {

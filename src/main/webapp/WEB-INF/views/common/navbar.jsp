@@ -62,7 +62,7 @@
     	font-family: 'Jal_Onuel';
         height: auto;
         min-height: 74%;
-        padding-bottom: 150px;
+        /*padding-bottom: 150px;*/
     }
 
     * {
@@ -107,21 +107,23 @@
 </head>
 <div class="nav_main">
 <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+    <div class="container" style="width: 95%">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
                     data-target="#myNavbar">
                 <span class="glyphicon glyphicon-menu-hamburger"></span>
             </button>
+            <a href="home">
             <div class="navbar-left logo">
                 <img src="../../resources/imgs/cafap_logo.png" width="80px" height="80px">
             </div>
             <h1 class="brand brand-name navbar-left"><div class="navbar-left" style="margin-left: 20px">Cafap</h1>
+            </a>
         </div>
-        <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+        <div class="collapse navbar-collapse navbar-right" style="font-family: 'Jal_Onuel';" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home">Map</a></li>
-                <li><a href="login">MyInfo</a></li>
+                <li><a href="home" style="font-size: x-large;">지도</a></li>
+                <li><a href="login" style="font-size: x-large;">내정보</a></li>
             </ul>
         </div>
     </div>
