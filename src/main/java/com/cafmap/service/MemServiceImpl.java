@@ -37,4 +37,9 @@ public class MemServiceImpl implements MemService{
 		log.info("======================== MemServiceImpl.write() end ========================");
 	}
 
+	@Override
+	public int countUser() {
+		return dao.countUser();
+	}
+
 }

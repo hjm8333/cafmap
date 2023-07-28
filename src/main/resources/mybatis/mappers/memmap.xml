@@ -11,7 +11,11 @@
     </select>
     
     <insert id="write" parameterType="hashmap">
-   		insert into user (id, pwd, nickname, tel, imgPath) values(#{id}, #{pwd}, #{nickname}, #{tel}, #{imgPath})
+   		insert into user (id, pwd, nickname) values(#{id}, #{pwd}, #{nickname})
     </insert>
+
+    <select id="countUser" resultType="int">
+        select count(*) from user
+    </select>
 
 </mapper>

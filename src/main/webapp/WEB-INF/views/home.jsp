@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8"%>
 <html>
 <head>
 	<title>login</title>
@@ -244,7 +245,7 @@
 	<div id="map" style="width:95%;height:85%; margin: 0 auto; display: flex"></div>
 	<p style="margin-left: 30px" id="result"></p>
 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a49a7c1824f6f1b876a5be57e1d95b8f"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9"></script>
 	<script>
 
 		function clickPicture(ImgUrl) {
@@ -253,7 +254,8 @@
 				imageWidth: 800,
 				imageHeight: 600,
 				width : 800,
-				height : 600
+				height : 600,
+				showConfirmButton: false
 			})
 		}
 
