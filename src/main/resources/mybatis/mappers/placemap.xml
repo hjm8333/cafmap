@@ -10,4 +10,24 @@
         select * from place
     </select>
 
+    <select id="myPlaceList" resultType="com.cafmap.dto.MyPlaceDto" parameterType="int">
+        select * from my_place where userId = #{userId}
+    </select>
+
+    <select id="boardList" resultType="com.cafmap.dto.BoardDto" parameterType="int">
+        select * from board where placeId = #{placeId}
+    </select>
+
+    <insert id="boardWrite" parameterType="hashmap">
+        insert into board (content, created, userId, placeId, placeScore) values (#{content}, sysdate(), #{userId}, #{placeId}, #{placeScore})
+    </insert>
+
+    <update id="boardUpdate" parameterType="hashmap">
+        update board set content = #{content} where boardId = #{boardId}
+    </update>
+
+    <delete id="boardDelete" parameterType="hashmap">
+        delete from board where boardId = #{boardId}
+    </delete>
+
 </mapper>

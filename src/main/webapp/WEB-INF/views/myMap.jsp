@@ -1,10 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>지도</title>
+	<title>login</title>
 	<%@ include file="../views/common/navbar.jsp" %>
 </head>
 <style>
@@ -16,7 +15,7 @@
 	.info .close {position: absolute;top: 7px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
 	.info .close:hover {cursor: pointer;}
 	.info .body {position: relative;overflow: hidden;}
-	.info .desc {position: relative;margin: 5px 0 0 90px;height: 75px;}
+	.info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
 	.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 	.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
 	.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
@@ -237,61 +236,6 @@
 		transform : translateX(-50%) translateY(-50%);
 	}
 
-	.star {
-		position: relative;
-		color: #ddd;
-		font-size: 35px;
-		word-break: normal;
-		word-wrap: normal;
-	}
-
-	.star input {
-		width: 100%;
-		height: 100%;
-		position: absolute;
-		left: 0;
-		opacity: 0;
-		cursor: pointer;
-		display: initial;
-		top: 5px;
-	}
-
-	.star span {
-		width: 0;
-		position: absolute;
-		left: 0;
-		color: #b67f5f;
-		overflow: hidden;
-		pointer-events: none;
-		text-shadow: -1px 0 #b67f5f, 0 1px #b67f5f, 1px 0 #b67f5f, 0 -1px #b67f5f;
-	}
-
-	input[type="text"], .login-show input[type="password"]{
-		width: 67%;
-		margin: 0 0;
-		padding: 5px;
-		border: 1px solid black;
-		outline: none;
-		font-size: 1.5em;
-		display: inline-block;
-		color: black;
-	}
-
-	input[type="button"] {
-		max-width: 100px;
-		width: 100%;
-		background: #444444;
-		color: #f9f9f9;
-		border: none;
-		padding: 6px;
-		text-transform: uppercase;
-		border-radius: 2px;
-		float: right;
-		cursor: pointer;
-		display: inline-block;
-		font-size: 1.5em;
-	}
-
 
 </style>
 
@@ -329,41 +273,12 @@
 <%-- -------------------------------------------------------------------------- --%>
 <section>
 	<!-- -------------------------------------------------------------------------- -->
-<%--	<div>--%>
-<%--		<div style="display: inline-block; vertical-align: middle;">--%>
-<%--        <span class="star">--%>
-<%--            ★★★★★--%>
-<%--            <span>★★★★★</span>--%>
-<%--            <input type="range" id="starVal" oninput="drawStar(this)" value="1" step="1" min="0" max="10">--%>
-<%--        </span>--%>
-<%--		</div>--%>
-<%--		<text style="color: #b67f5f; font-size: 30px; display: inline-block; vertical-align: middle;" id="resultStar">0/5</text>--%>
-<%--	</div>--%>
-
+	<h1>MyMap</h1>
 	<div id="map" style="width:95%;height:85%; margin: 0 auto; display: flex"></div>
 	<p style="margin-left: 30px" id="result"></p>
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9"></script>
 	<script>
-
-		// $("select[name=category]").change(function() {
-		// 	console.log($(this).val()); // value값 가져오기
-		// 	console.log($("select[name=category] option:selected").text()); // text값 가져오기
-		// 	const selectedText = $("select[name=category] option:selected").text();
-		// 	const Url = "/photo_writeView?cateName=" + encodeURIComponent(selectedText);
-		//
-		// 	// Redirect to the destination URL with the selected text as a query parameter
-		// 	$("#photo_writeView").click(function() {
-		// 		window.location.href = Url;
-		// 	});
-		// });
-
-		function drawStar(target){
-			document.querySelector(`#placeScore`).style.width = `${'${target.value * 10}'}%`;
-			<%--document.getElementById('resultStar').innerText = `${'${(target.value * 10)/20}'}/5`;--%>
-		}
-
-		// let stars = document.getElementById("starVal");
 
 		function clickPicture(ImgUrl) {
 			Swal.fire({
@@ -377,17 +292,7 @@
 		}
 
 		var container = document.getElementById('map');
-
-		var writeX = sessionStorage.getItem("writeX");
-		var writeY = sessionStorage.getItem("writeY");
-
-		if(writeX&&writeY) {
-			var defaultGPS = new kakao.maps.LatLng(writeX, writeY);
-			sessionStorage.removeItem("writeX");
-			sessionStorage.removeItem("writeY");
-		} else {
-			var defaultGPS = new kakao.maps.LatLng(35.156254720925176, 129.05941094198724);
-		}
+		var defaultGPS = new kakao.maps.LatLng(35.156254720925176, 129.05941094198724);
 		var options = {
 			center: defaultGPS,
 			level: 2
@@ -423,45 +328,22 @@
 			});
 
 			var content = `
-				<div class="wrap">
-				  <div class="info">
-					<div class="title">${dto.name}<div class="close" onclick="closeOverlay()" title="닫기"></div></div>
-					<div class="body">
-					  <div class="img">
-						<img src="${dto.imgPath}" style="border-radius: 5px" width="73" height="70" onclick="clickPicture('${dto.imgPath}')">
-					  </div>
-					  <div class="desc" onclick="placeInfo_${dto.placeId}()">
-						<div class="ellipsis">${dto.address}</div>
-						<div class="jibun ellipsis">${dto.jibunAddress}</div>
-						<div><a href="${dto.homepage}" target="_blank" class="link">홈페이지</a></div>
-							<span>
-								<div style="display: inline-block; vertical-align: middle;">
-									<span class="star" style="position: absolute;
-										top: 45px;
-										left: -2px;
-										color: #ddd;
-										font-size: 20px;
-										word-break: normal;
-										word-wrap: normal;">
-										★★★★★
-										<span style="width: ${dto.avgScore * 20}%;">★★★★★</span>
-									</span>
-								</div>
-									<text style="color: #b67f5f;
-										font-size: 18px;
-										display: inline-block;
-										vertical-align: middle;
-										text-align: right;
-										position: absolute;
-										bottom: 0px;
-										right: 71px;">${dto.avgScore}</text>
-							</span>
-						</div>
-					  </div>
-					</div>
-				  </div>
-				</div>
-    		  `;
+        <div class="wrap">
+          <div class="info">
+            <div class="title">${dto.name}<div class="close" onclick="closeOverlay()" title="닫기"></div></div>
+            <div class="body">
+              <div class="img">
+                <img src="${dto.imgPath}" style="border-radius: 5px" width="73" height="70" onclick="clickPicture('${dto.imgPath}')">
+              </div>
+              <div class="desc" onclick="placeInfo_${dto.placeId}()">
+                <div class="ellipsis">${dto.address}</div>
+                <div class="jibun ellipsis">${dto.jibunAddress}</div>
+                <div><a href="${dto.homepage}" target="_blank" class="link">홈페이지</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
 
 
 			var overlay = new kakao.maps.CustomOverlay({
@@ -479,192 +361,58 @@
 
 		function placeInfo_${dto.placeId}() {
 			Swal.fire({
-				  width : 900
+				title : '상세 정보'
+				, width : 900
 				, showConfirmButton : false
 				, html: `<div id="spStrap" sp-contents class="initialize" spstrap>
-							<div class="mo-4BC8F294A9 initialize" sp-edit="box" sp-sort-nodrop="fixed">
-								<div sp-edit="box" sp-size sp-sort-nodrop="element" style="" class="initialize">
-									<div sp-edit="box" style="text-align:center;" class="initialize" area="before"
-										draggable="false">
-										<a href="#!" sp-edit="image_button" sp-resize style="width:80%;" class="initialize"
-											draggable="false"><img
-												src="${dto.imgPath}" sp-edit="image"
-												style="width:100%; height: 520px; border-radius: 5px" class="initialize" draggable="false"></a>
-									</div>
+	<div class="mo-4BC8F294A9 initialize" sp-edit="box" sp-sort-nodrop="fixed">
+		<div sp-edit="box" sp-size sp-sort-nodrop="element" style="" class="initialize">
+			<div sp-edit="box" style="text-align:center;" class="initialize" area="before"
+				draggable="false">
+				<a href="#!" sp-edit="image_button" sp-resize style="width:80%;" class="initialize"
+					draggable="false"><img
+						src="${dto.imgPath}" sp-edit="image"
+						style="width:100%; border-radius: 5px" class="initialize" draggable="false"></a>
+			</div>
 
-									<div sp-edit="text" style="padding: 10px 0 0 0; text-align:center;" class="initialize" area="before"><span
-											sp-font="40" style="color:#333;"><b>${dto.name}</b></span></div>
-									<div sp-edit="text" style="text-align:center;" class="initialize" area="before" draggable="false">
-										<span sp-font="20" style="color:#888;" draggable="false">${dto.placeInfo}</span><br draggable="false">
-									</div>
-									<div sp-edit="text" style="text-align:center;" class="initialize" area="before" draggable="false">
-										<span sp-font="12" style="color:#888; margin-bottom: 3px;" draggable="false">
-										<a href="https://map.naver.com/?dlevel=12&query=${dto.name}" target="_blank">${dto.address} ${dto.jibunAddress}</a>
-										</span><br draggable="false">
-									</div>
+			<div sp-edit="text" style="padding:1rem 0;text-align:center;" class="initialize" area="before"><span
+					sp-font="40" style="color:#333;"><b>${dto.name}</b></span></div>
 
-									<div sp-edit="text" style="line-height:2;text-align:center;" class="initialize"
-										area="before" draggable="false"><span sp-font="20" style="color:#fff;background-color:#b67f5f;;"
-											draggable="false"><b draggable="false">
-											&nbsp;&nbsp;${dto.category}&nbsp;
-											</b></span>
+			<div sp-edit="text" style="padding:0;text-align:center;" class="initialize" area="before" draggable="false">
+				<span sp-font="25" style="color:#888;" draggable="false">${dto.placeInfo}</span><br draggable="false">
+			</div>
+			<div sp-edit="text" style="line-height:2;padding:3rem 0 0 0;text-align:center;" class="initialize"
+				area="before" draggable="false"><span sp-font="20" style="color:#fff;background-color:#444;"
+					draggable="false"><b draggable="false">
+					&nbsp;&nbsp;${dto.category}&nbsp;
+					</b></span></div>
 
-											<span>
-												<div style="display: inline-block; vertical-align: middle;">
-													<span class="star" style="position: absolute;
-																			top: -18px;
-																			color: #ddd;
-																			font-size: 35px;
-																			word-break: normal;
-																			word-wrap: normal;">
-														★★★★★
-														<span style="width: ${dto.avgScore * 20}%;">★★★★★</span>
-													</span>
-												</div>
-													<text style="color: #b67f5f;
-														font-size: 30px;
-														display: inline-block;
-														vertical-align: middle;
-														text-align: right;
-														position: absolute;
-														bottom: -11px;
-														right: 27px;">${dto.avgScore}</text>
-											</span>
-											</div>
+			<div class="mo-7A26095118 initialize" sp-edit="box" sp-sort-nodrop="fixed"
+				style="padding:1.5rem 0; text-align:center;">
+				<img sp-edit="icon_svg"
+					src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' fill='%234b5566' viewBox='0 0 24 24'%3E%3Cpath d='M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z'/%3E%3C/svg%3E"
+					class="initialize">
+				<div sp-edit="box" sp-line style="border-top:0.01rem solid rgba(0,0,0,0.05);" class="initialize">‧</div>
+			</div>
 
-									<div class="mo-7A26095118 initialize" sp-edit="box" sp-sort-nodrop="fixed"
-										style="padding:1.5rem 0; text-align:center;">
-										<img sp-edit="icon_svg"
-											src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' fill='%234b5566' viewBox='0 0 24 24'%3E%3Cpath d='M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z'/%3E%3C/svg%3E"
-											class="initialize">
-										<div sp-edit="box" sp-line style="border-top:0.01rem solid rgba(0,0,0,0.05);" class="initialize">‧</div>
-									</div>
-									<div class="mo-D5BFD24B0D initialize" sp-edit="box" sp-sort-nodrop="fixed"
-										style="text-align:left;padding-bottom: 15px;">
-										<div sp-edit="box" sp-size class="initialize">
+			<div class="mo-D5BFD24B0D initialize" sp-edit="box" sp-sort-nodrop="fixed"
+				style="text-align:left;padding:2rem 0;">
+				<div sp-edit="box" sp-size class="initialize">
 
-											<div class="mo-D5BFD24B0D--text initialize" sp-edit="text"
-												style="padding:1rem 1.5rem;border:.2rem solid #333;background-color:#fff;"><span sp-font="20"
-													style="color:#333;"><b>한줄리뷰</b></span>
-											</div>
+					<div class="mo-D5BFD24B0D--text initialize" sp-edit="text"
+						style="padding:1rem 1.5rem;border:.2rem solid #333;background-color:#fff;"><span sp-font="20"
+							style="color:#333;"><b>리뷰</b></span></div>
 
-											<div class="mo-D5BFD24B0D--line initialize" sp-edit="background"
-												style="padding:.4rem 0;width:100%; text-align: center; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%23333333' viewBox='0 0 100 100'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Crect y='40' width='100' height='20'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;); background-repeat: repeat-x; background-position: center center;">
-											</div>
+					<div class="mo-D5BFD24B0D--line initialize" sp-edit="background"
+						style="padding:.4rem 0;width:100%; text-align: center; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%23333333' viewBox='0 0 100 100'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Crect y='40' width='100' height='20'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;); background-repeat: repeat-x; background-position: center center;">
+					</div>
 
-										</div>
-									</div>
-
-										<c:forEach items="${dto.boardDtoList}" var="boardDto">
-											<div sp-edit="text" style="text-align:center; float:left;" class="initialize" area="before" draggable="false">
-												<span sp-font="18" style="color:black; margin-bottom: 3px;" draggable="false">
-													<span style="font-weight: 900;">${boardDto.memDto.nickname}</span>
-													<span style="font-weight: 900; position: relative; bottom: 2px;">:</span>
-													${boardDto.content}
-													<span>
-														<div style="display: inline-block; vertical-align: middle;">
-															<span class="star" style="
-																top: -6px;
-																color: #ddd;
-																font-size: 25px;
-																word-break: normal;
-																word-wrap: normal;">
-																★★★★★
-																<span style="width: ${boardDto.placeScore * 20}%;">★★★★★</span>
-															</span>
-														</div>
-													</span>
-													<span sp-font="16" style="bottom: 2px; position: relative;"><fmt:formatDate value="${boardDto.created}" dateStyle="default"/></span>
-												</span><br draggable="false">
-											</div>
-										</c:forEach>
-
-										<div>
-											<form style="display: initial;" id="writeForm_${dto.placeId}">
-
-											<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
-
-											<span>
-												<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
-													<span class="star">
-														★★★★★
-														<span id="placeScore">★★★★★</span>
-														<input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="5" step="1" min="0" max="10">
-													</span>
-												</div>
-											</span>
-												<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
-												<input type="hidden" value="${dto.placeId}" name="placeId">
-											</form>
-										</div>
-								</div>
-							</div>
-						</div>`
+				</div>
+			</div>
+		</div>
+	</div>
+</div>`
 			})
-		}
-
-
-		$(document).on("click", "#starVal" ,function() {
-			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
-			let starOk_${dto.placeId} = document.querySelector("#starVal");
-			console.log(writeOk_${dto.placeId}.value);
-			console.log(starOk_${dto.placeId}.value);
-			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
-				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
-				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
-			}
-		})
-
-		$(document).on("keyup", "#writeInput" ,function() {
-			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
-			let starOk_${dto.placeId} = document.querySelector("#starVal");
-			console.log(writeOk_${dto.placeId}.value);
-			console.log(starOk_${dto.placeId}.value);
-			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
-				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
-				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
-			}
-		})
-
-		$("#writeCheck_${dto.placeId}").click(function(){
-
-			var formData = $("#writeForm_${dto.placeId}").serialize();
-
-			$.ajax({
-				type: "POST"
-				,data: formData
-				,url: "boardWrite"
-				,success: function(data, status){
-					if (data === 200) {
-						reload_${dto.placeId}()
-					} else {
-						Swal.fire({
-							icon: 'warning',
-							title: '실패',
-							text: "로그인 해주세요!",
-							showCancelButton: false,
-							confirmButtonText: '확인'
-						})
-					}
-				}
-				,error: function(){
-					Swal.fire({
-						icon: 'warning',
-						title: '실패',
-						text: "서버 문제입니다",
-						showCancelButton: false,
-						confirmButtonText: '확인'
-					})
-				}
-			})
-		});
-
-		function reload_${dto.placeId}() {
-			sessionStorage.setItem("reloading", "true");
-			sessionStorage.setItem("writeDtoId", ${dto.placeId});
-			sessionStorage.setItem("writeX", ${dto.widthCoordinate});
-			sessionStorage.setItem("writeY", ${dto.heightCoordinate});
-			document.location.reload();
 		}
 
 		addCustomOverlay_${dto.placeId}();
@@ -684,17 +432,8 @@
 </body>
 <script>
 	$(document).ready(function() {
-		var reloading = sessionStorage.getItem("reloading");
-		var writeDtoId = sessionStorage.getItem("writeDtoId");
-		if (reloading) {
-			sessionStorage.removeItem("reloading");
-			var functionName = "placeInfo_" + writeDtoId; // 함수 이름 동적으로 생성
-			sessionStorage.removeItem("writeDtoId");
-			if (typeof window[functionName] === 'function') {
-				window[functionName](); // 동적으로 생성된 함수 실행
-			}
-		}
-	});
+
+	})// ~~ end
 </script>
 
 

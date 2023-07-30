@@ -8,22 +8,35 @@
 </head>
 <%--a87543beac34ad8d2b278a24584916c9 카카오 key--%>
 
+<style>
+	.img-circle {
+		width: 250px;
+	}
+</style>
+
 <body>
 <%-- -------------------------------------------------------------------------- --%>
 <section>
 	<!-- -------------------------------------------------------------------------- -->
 
-	<div class="container-fluid well span6" style="box-shadow: 0 0 15px 9px #00000096; width: 70%; height: 70%">
+	<div class="container-fluid well span6" style="box-shadow: 0 0 15px 9px #00000096; width: 50%; height: 70%; margin-top: 25px; padding: 70px">
 		<div class="row-fluid">
 			<div class="span2" >
-				<img src="https://secure.gravatar.com/avatar/de9b11d0f9c0569ba917393ed5e5b3ab?s=140&r=g&d=mm" class="img-circle">
+				<c:choose>
+					<c:when test="${userDto.imgPath == null}">
+						<img src="../../resources/imgs/userDefaultIcon.png" class="img-circle">
+					</c:when>
+					<c:otherwise>
+						<img src="${userDto.imgPath}" class="img-circle">
+					</c:otherwise>
+				</c:choose>
+
 			</div>
 
 			<div class="span8">
-				<h3>User Name</h3>
-				<h6>Email: MyEmail@servidor.com</h6>
-				<h6>Ubication: Colombia</h6>
-				<h6>Old: 1 Year</h6>
+				<h3>ID : ${userDto.nickname}</h3>
+				<h6>${userDto.id}</h6>
+				<h6>tel : ${userDto.tel}</h6>
 				<h6><a href="#">More... </a></h6>
 			</div>
 

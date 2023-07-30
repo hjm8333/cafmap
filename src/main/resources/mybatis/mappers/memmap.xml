@@ -18,4 +18,8 @@
         select count(*) from user
     </select>
 
+    <select id="selectUser" parameterType="int" resultType="com.cafmap.dto.MemDto">
+        select * from user where userId = #{userId}
+    </select>
+
 </mapper>

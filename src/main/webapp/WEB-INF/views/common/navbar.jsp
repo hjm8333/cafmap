@@ -123,6 +123,9 @@
         <div class="collapse navbar-collapse navbar-right" style="font-family: 'Jal_Onuel';" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="home" style="font-size: x-large;">지도</a></li>
+                <c:if test="${not empty userDto}">
+                    <li><a href="myMap" style="font-size: x-large;">내지도</a></li>
+                </c:if>
                 <li><a href="login" style="font-size: x-large;">내정보</a></li>
             </ul>
         </div>

@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PlaceDto {
+public class MyPlaceDto {
     private int placeId;
     private double widthCoordinate;
     private double heightCoordinate;
@@ -23,6 +21,5 @@ public class PlaceDto {
     private String placeInfo;
     private String imgPath;
     private String homepage;
-
-    private List<BoardDto> boardDtoList;
+    private int userId;
 }

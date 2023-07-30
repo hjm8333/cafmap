@@ -25,10 +25,14 @@ public class MemController {
 	private MemService service;
 
 	@RequestMapping("/login")
-	public String login() {
+	public String login(HttpSession session) {
 		log.info("@# login");
 
-		return "login";
+		if(session.getAttribute("userDto") != null) {
+			return "info";
+		}else {
+			return "login";
+		}
 	}
 
 	@RequestMapping("/login_yn")
@@ -52,7 +56,6 @@ public class MemController {
 	@RequestMapping("/info")
 	public String info() {
 		log.info("=============== info");
-
 		return "info";
 	}
 	
