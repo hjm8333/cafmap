@@ -54,11 +54,23 @@ public class MemController {
 	}
 	
 	@RequestMapping("/info")
-	public String info() {
+	public String info(HttpSession session) {
 		log.info("=============== info");
-		return "info";
+
+		if(session.getAttribute("userDto") != null) {
+			return "info";
+		}else {
+			return "login";
+		}
 	}
-	
+
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		log.info("=============== logout");
+		session.removeAttribute("userDto");
+		return "redirect:login";
+	}
+
 	@RequestMapping("/register")
 	public String register() {
 		log.info("=============== 회원가입");

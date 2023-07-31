@@ -11,7 +11,7 @@
 
 <style>
 	.img-circle {
-		width: 250px;
+		width: 100%;
 	}
 </style>
 
@@ -28,16 +28,16 @@
 			<input type="radio" name="active-log-panel" id="log-reg-show"  checked="checked">
 		</div>
 
-		<div class="register-info-box">
+		<div class="register-info-box" style="width: 35%">
 			<h2>프로필 수정은 이쪽입니다!</h2>
 			<label id="label-login" for="log-login-show">프로필 수정</label>
 			<input type="radio" name="active-log-panel" id="log-login-show">
 		</div>
 
-		<div class="white-panel">
+		<div class="white-panel" style="width: 40%; top: -100px;">
 			<div class="login-show" style="opacity: 1.0;">
 				<div class="container-fluid well span6" style="box-shadow: 0 0 15px 9px #00000096; margin-top: 25px; padding: 70px">
-					<div class="row-fluid">
+					<div class="row-fluid" style="margin-bottom: 100px;">
 						<div class="span2" >
 							<c:choose>
 								<c:when test="${userDto.imgPath == null}">
@@ -51,22 +51,16 @@
 						</div>
 
 						<div class="span8">
-							<h3>ID : ${userDto.nickname}</h3>
-							<h6>${userDto.id}</h6>
-							<h6>tel : ${userDto.tel}</h6>
-							<h6><a href="#">More... </a></h6>
+							<h3>아이디 : ${userDto.nickname}</h3>
+							<h6>닉네임 : ${userDto.id}</h6>
+							<c:if test="${userDto.tel != null}">
+								<h6>tel : ${userDto.tel}</h6>
+							</c:if>
 						</div>
 
 						<div class="span2">
 							<div class="btn-group">
-								<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="#">
-									Action
-									<span class="icon-cog icon-white"></span><span class="caret"></span>
-								</a>
-								<ul class="dropdown-menu">
-									<li><a href="#"><span class="icon-wrench"></span> Modify</a></li>
-									<li><a href="#"><span class="icon-trash"></span> Delete</a></li>
-								</ul>
+								<input type="button" value="로그아웃" onclick="location.href='logout'">
 							</div>
 						</div>
 					</div>
