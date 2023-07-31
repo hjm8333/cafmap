@@ -5,12 +5,14 @@ import com.cafmap.dao.PlaceDao;
 import com.cafmap.dto.BoardDto;
 import com.cafmap.dto.MyPlaceDto;
 import com.cafmap.dto.PlaceDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Service
 public class PlaceServiceImpl implements PlaceService{
 
@@ -37,10 +39,16 @@ public class PlaceServiceImpl implements PlaceService{
             if(tag.toString().equals("")) tag.append("카페");
             list.get(i).setCategory(tag.toString());
 
+            double avgScore = 0;
+
             List<BoardDto> boardDtoList = dao.boardList(list.get(i).getPlaceId());
             for (int j = 0; j < boardDtoList.size(); j++) {
                 boardDtoList.get(j).setMemDto(memDao.selectUser(boardDtoList.get(j).getUserId()));
+                avgScore += boardDtoList.get(j).getPlaceScore();
             }
+            avgScore = Math.round((avgScore/boardDtoList.size())*10)/10.0;
+            list.get(i).setAvgScore(avgScore);
+            list.get(i).setCountReview(boardDtoList.size());
             list.get(i).setBoardDtoList(boardDtoList);
         }
         return list;
@@ -73,16 +81,16 @@ public class PlaceServiceImpl implements PlaceService{
 
     @Override
     public void boardWrite(HashMap<String, String> param) {
-
+        dao.boardWrite(param);
     }
 
     @Override
     public void boardUpdate(HashMap<String, String> param) {
-
+        dao.boardUpdate(param);
     }
 
     @Override
     public void boardDelete(int boardId) {
-
+        dao.boardDelete(boardId);
     }
 }

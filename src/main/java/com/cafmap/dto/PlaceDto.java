@@ -23,6 +23,7 @@ public class PlaceDto {
     private String placeInfo;
     private String imgPath;
     private String homepage;
+    private int countReview;
 
     private List<BoardDto> boardDtoList;
 }

@@ -54,11 +54,12 @@ public class PlaceController {
     @RequestMapping("/boardWrite")
     public ResponseEntity<Integer> boardWrite(@RequestParam HashMap<String, String> param, HttpSession session) {
 
-        log.info("@# boardWrite"+param);
+        param.replace("placeScore",String.valueOf(Double.parseDouble(param.get("placeScore"))/2));
         MemDto userDto = (MemDto) session.getAttribute("userDto");
+        log.info("@# boardWrite"+param);
 
         if(userDto != null) {
-            param.put("userId", userDto.getId());
+            param.put("userId", String.valueOf(userDto.getUserId()));
             service.boardWrite(param);
             return ResponseEntity.status(HttpStatus.OK).body(200);
         }else {

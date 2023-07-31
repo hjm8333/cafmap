@@ -455,6 +455,14 @@
 										position: absolute;
 										bottom: 0px;
 										right: 71px;">${dto.avgScore}</text>
+									<text style="color: #black;
+										    font-size: 14px;
+											display: inline-block;
+											vertical-align: middle;
+											text-align: right;
+											position: absolute;
+											bottom: 2px;
+											right: 4px;">리뷰 ${dto.countReview}개</text>
 							</span>
 						</div>
 					  </div>
@@ -556,7 +564,7 @@
 									</div>
 
 										<c:forEach items="${dto.boardDtoList}" var="boardDto">
-											<div sp-edit="text" style="text-align:center; float:left;" class="initialize" area="before" draggable="false">
+											<div sp-edit="text" style="text-align:left;" class="initialize" area="before" draggable="false">
 												<span sp-font="18" style="color:black; margin-bottom: 3px;" draggable="false">
 													<span style="font-weight: 900;">${boardDto.memDto.nickname}</span>
 													<span style="font-weight: 900; position: relative; bottom: 2px;">:</span>
@@ -579,30 +587,36 @@
 											</div>
 										</c:forEach>
 
-										<div>
-											<form style="display: initial;" id="writeForm_${dto.placeId}">
+										<c:if test="${not empty userDto}">
+											<div>
+												<form style="display: initial;" id="writeForm_${dto.placeId}">
 
-											<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
+												<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
 
-											<span>
-												<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
-													<span class="star">
-														★★★★★
-														<span id="placeScore">★★★★★</span>
-														<input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="5" step="1" min="0" max="10">
-													</span>
-												</div>
-											</span>
-												<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
-												<input type="hidden" value="${dto.placeId}" name="placeId">
-											</form>
-										</div>
+												<span>
+													<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
+														<span class="star">
+															★★★★★
+															<span id="placeScore" style="width : 60%;">★★★★★</span>
+															<input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="6" step="1" min="0" max="10">
+														</span>
+													</div>
+												</span>
+													<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
+													<input type="hidden" value="${dto.placeId}" name="placeId">
+												</form>
+											</div>
+										</c:if>
 								</div>
 							</div>
 						</div>`
 			})
 		}
 
+		function drawStar(target){
+			document.querySelector(`#placeScore`).style.width = `${'${target.value * 10}'}%`;
+			<%--document.getElementById('resultStar').innerText = `${'${(target.value * 10)/20}'}/5`;--%>
+		}
 
 		$(document).on("click", "#starVal" ,function() {
 			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
@@ -626,8 +640,7 @@
 			}
 		})
 
-		$("#writeCheck_${dto.placeId}").click(function(){
-
+		$(document).on("click", "#writeCheck_${dto.placeId}" ,function() {
 			var formData = $("#writeForm_${dto.placeId}").serialize();
 
 			$.ajax({
