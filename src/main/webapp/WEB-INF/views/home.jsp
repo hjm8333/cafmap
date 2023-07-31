@@ -341,9 +341,8 @@
 <%--	</div>--%>
 
 	<div id="map" style="width:95%;height:85%; margin: 0 auto; display: flex"></div>
-	<p style="margin-left: 30px" id="result"></p>
 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9&libraries=services,clusterer,drawing"></script>
 	<script>
 
 		// $("select[name=category]").change(function() {
@@ -415,6 +414,13 @@
 		<c:forEach items="${list}" var="dto" varStatus="status">
 		// DB에서 가져온 위치 정보를 기반으로 커스텀 오버레이를 생성하고 지도에 추가하는 함수
 
+		<c:set var="existingMyReview" value="${false}"/>
+		<c:forEach items="${dto.boardDtoList}" var="boardDto">
+			<c:if test="${boardDto.memDto.userId == userDto.userId}">
+				<c:set var="existingMyReview" value="${true}"/>
+			</c:if>
+		</c:forEach>
+
 		function addCustomOverlay_${dto.placeId}() {
 			var marker = new kakao.maps.Marker({
 				map: map,
@@ -433,7 +439,11 @@
 					  <div class="desc" onclick="placeInfo_${dto.placeId}()">
 						<div class="ellipsis">${dto.address}</div>
 						<div class="jibun ellipsis">${dto.jibunAddress}</div>
-						<div><a href="${dto.homepage}" target="_blank" class="link">홈페이지</a></div>
+						<div><a href="${dto.homepage}" target="_blank" class="link">홈페이지</a>&nbsp;&nbsp;
+							<c:if test="${(not empty userDto) and existingMyReview}">
+							<text style="color: #b67f5f;">내가 리뷰한 카페</text>
+							</c:if>
+						</div>
 							<span>
 								<div style="display: inline-block; vertical-align: middle;">
 									<span class="star" style="position: absolute;
@@ -562,11 +572,21 @@
 
 										</div>
 									</div>
-
 										<c:forEach items="${dto.boardDtoList}" var="boardDto">
 											<div sp-edit="text" style="text-align:left;" class="initialize" area="before" draggable="false">
 												<span sp-font="18" style="color:black; margin-bottom: 3px;" draggable="false">
-													<span style="font-weight: 900;">${boardDto.memDto.nickname}</span>
+													<c:choose>
+														<c:when test="${boardDto.memDto.userId == userDto.userId}">
+															<span style="font-weight: 900; color: #b67f5f">
+																${boardDto.memDto.nickname}
+															</span>
+														</c:when>
+														<c:otherwise>
+															<span style="font-weight: 900;">
+																${boardDto.memDto.nickname}
+															</span>
+														</c:otherwise>
+													</c:choose>
 													<span style="font-weight: 900; position: relative; bottom: 2px;">:</span>
 													${boardDto.content}
 													<span>
@@ -582,47 +602,69 @@
 															</span>
 														</div>
 													</span>
-													<span sp-font="16" style="bottom: 2px; position: relative;"><fmt:formatDate value="${boardDto.created}" dateStyle="default"/></span>
+													<span sp-font="16" style="bottom: 2px; position: relative;"><fmt:formatDate value="${boardDto.created}" dateStyle="default"/>
+														<c:if test="${boardDto.memDto.userId == userDto.userId}">
+															<button type="button" class="swal2-confirm swal2-styled" onclick="deleteBoard_${dto.placeId}(${boardDto.boardId})"
+																style="
+																    display: inline-block;
+																	height: 30px;
+																	width: 45px;
+																	padding: 0px;
+																	margin: 0px 0;
+																	background-color: #b67f5f;
+																	font-size: 1em;
+																">
+															삭제</button>
+														</c:if>
+													</span>
 												</span><br draggable="false">
 											</div>
 										</c:forEach>
 
-										<c:if test="${not empty userDto}">
+										<c:choose>
+											<c:when test="${(not empty userDto) and !existingMyReview}">
+												<div>
+													<form style="display: initial;" id="writeForm_${dto.placeId}">
+													<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
+													<span>
+														<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
+															<span class="star">
+																★★★★★
+																<span id="placeScore" style="width : 60%;">★★★★★</span>
+																<input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="6" step="1" min="0" max="10">
+															</span>
+														</div>
+													</span>
+														<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
+														<input type="hidden" value="${dto.placeId}" name="placeId">
+													</form>
+												</div>
+											</c:when>
+											<c:when test="${empty userDto}">
 											<div>
-												<form style="display: initial;" id="writeForm_${dto.placeId}">
-
-												<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
-
-												<span>
-													<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
-														<span class="star">
-															★★★★★
-															<span id="placeScore" style="width : 60%;">★★★★★</span>
-															<input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="6" step="1" min="0" max="10">
-														</span>
-													</div>
-												</span>
-													<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
-													<input type="hidden" value="${dto.placeId}" name="placeId">
-												</form>
+												<button type="button" class="swal2-confirm swal2-styled" onclick="loginGo_${dto.placeId}()"
+													style="
+													display: inline-block;
+													height: 45px;
+													width: 367;
+													padding: 0px;
+													margin: 0px 0;
+													background-color: #b67f5f;
+													font-size: 2.5em;
+													">
+												로그인하고 리뷰 쓰기</button>
 											</div>
-										</c:if>
+											</c:when>
+										</c:choose>
 								</div>
 							</div>
 						</div>`
 			})
 		}
 
-		function drawStar(target){
-			document.querySelector(`#placeScore`).style.width = `${'${target.value * 10}'}%`;
-			<%--document.getElementById('resultStar').innerText = `${'${(target.value * 10)/20}'}/5`;--%>
-		}
-
 		$(document).on("click", "#starVal" ,function() {
 			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
 			let starOk_${dto.placeId} = document.querySelector("#starVal");
-			console.log(writeOk_${dto.placeId}.value);
-			console.log(starOk_${dto.placeId}.value);
 			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
 				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
 				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
@@ -632,13 +674,47 @@
 		$(document).on("keyup", "#writeInput" ,function() {
 			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
 			let starOk_${dto.placeId} = document.querySelector("#starVal");
-			console.log(writeOk_${dto.placeId}.value);
-			console.log(starOk_${dto.placeId}.value);
 			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
 				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
 				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
 			}
 		})
+
+		function deleteBoard_${dto.placeId}(deleteData) {
+
+			var formData = {
+				boardId : deleteData
+			};
+
+			console.log(formData);
+			$.ajax({
+				type: "POST"
+				,data: formData
+				,url: "boardDelete"
+				,success: function(data, status){
+					if (data === 200) {
+						reload_${dto.placeId}()
+					} else {
+						Swal.fire({
+							icon: 'warning',
+							title: '실패',
+							text: "로그인 해주세요!",
+							showCancelButton: false,
+							confirmButtonText: '확인'
+						})
+					}
+				}
+				,error: function(){
+					Swal.fire({
+						icon: 'warning',
+						title: '실패',
+						text: "서버 문제입니다",
+						showCancelButton: false,
+						confirmButtonText: '확인'
+					})
+				}
+			})
+		}
 
 		$(document).on("click", "#writeCheck_${dto.placeId}" ,function() {
 			var formData = $("#writeForm_${dto.placeId}").serialize();
@@ -678,6 +754,14 @@
 			sessionStorage.setItem("writeX", ${dto.widthCoordinate});
 			sessionStorage.setItem("writeY", ${dto.heightCoordinate});
 			document.location.reload();
+		}
+
+		function loginGo_${dto.placeId}() {
+			sessionStorage.setItem("reloading", "true");
+			sessionStorage.setItem("writeDtoId", ${dto.placeId});
+			sessionStorage.setItem("writeX", ${dto.widthCoordinate});
+			sessionStorage.setItem("writeY", ${dto.heightCoordinate});
+			location.href="/login";
 		}
 
 		addCustomOverlay_${dto.placeId}();

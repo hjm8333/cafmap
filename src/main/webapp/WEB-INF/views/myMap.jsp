@@ -267,6 +267,13 @@
 		-o-transform: translateY(-50%);
 		transform: translateY(-50%);
 	}
+
+	.map_wrap {position:relative;width:100%;height:350px;}
+	.title {font-weight:bold;display:block;}
+	.hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+	#centerAddr {display:block;margin-top:2px;font-weight: normal;}
+	.bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+
 </style>
 
 <body>
@@ -277,7 +284,7 @@
 	<div id="map" style="width:95%;height:85%; margin: 0 auto; display: flex"></div>
 	<p style="margin-left: 30px" id="result"></p>
 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9&libraries=services,clusterer,drawing"></script>
 	<script>
 
 		function clickPicture(ImgUrl) {
@@ -299,6 +306,48 @@
 		};
 
 		var map = new kakao.maps.Map(container, options);
+
+		// ------------------------------------------- 마커/주소/인포윈도우 -----------------------------------
+
+		var geocoder = new kakao.maps.services.Geocoder();
+
+		function searchDetailAddrFromCoords(coords, callback) {
+			// 좌표로 법정동 상세 주소 정보를 요청합니다
+			geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+		}
+
+		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+			searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+				if (status === kakao.maps.services.Status.OK) {
+					var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+					detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+
+					var content = '<div class="bAddr">' +
+							'<span class="title">법정동 주소정보</span>' +
+							detailAddr +
+							'</div>';
+
+					// 마커를 클릭한 위치에 표시합니다
+					marker.setPosition(mouseEvent.latLng);
+					marker.setMap(map);
+
+					// 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
+					infowindow.setContent(content);
+					infowindow.open(map, marker);
+				}
+			});
+		});
+
+		var imageSrc2 = '../../resources/imgs/cafap_logo.png', // 마커이미지의 주소입니다
+				imageSize2 = new kakao.maps.Size(40, 44), // 마커이미지의 크기입니다
+				imageOption2 = {offset: new kakao.maps.Point(19, 44)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+		var marker = new kakao.maps.Marker({
+					image: new kakao.maps.MarkerImage(imageSrc2, imageSize2, imageOption2)
+				}), // 클릭한 위치를 표시할 마커입니다
+				infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
+
+		// ------------------------------------------- 마커/주소/인포윈도우 -----------------------------------
 
 		var startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 마커이미지의 주소입니다
 			startSize = new kakao.maps.Size(50, 45), // 마커이미지의 크기입니다

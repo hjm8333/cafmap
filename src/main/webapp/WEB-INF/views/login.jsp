@@ -218,7 +218,12 @@
 			,url: "login_yn"
 			,success: function(data, status){
 				if (data === 200) {
-					location.href = "/info";
+					var reloading = sessionStorage.getItem("reloading");
+					if (reloading) {
+						location.href = "/home";
+					} else {
+						location.href = "/info";
+					}
 				}else if(data === 404) {
 					Swal.fire({
 						icon: 'warning',

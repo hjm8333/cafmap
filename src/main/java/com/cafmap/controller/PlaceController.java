@@ -67,4 +67,14 @@ public class PlaceController {
         }
     }
 
+    @RequestMapping("/boardDelete")
+    public ResponseEntity<Integer> boardDelete(@RequestParam int boardId) {
+        log.info("@# boardDelete "+boardId);
+        try {
+            service.boardDelete(boardId);
+            return ResponseEntity.status(HttpStatus.OK).body(200);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.OK).body(400);
+        }
+    }
 }
