@@ -254,6 +254,48 @@
 		})
 	})
 
+	function fn_submit() {
+		var formData = new FormData();
+		var inputFile = $("input[type='file']");
+		var files = inputFile[0].files;
+		for (var i = 0; i < files.length; i++) {
+			console.log(files[i]);
+			formData.append("uploadFiles", files[i]);
+		}
+
+		$.ajax({
+			url: '/uploadAjax',
+			processData: false,
+			contentType: false,
+			data: formData,
+			type: 'POST',
+			dataType:'json',
+			success: function(data){
+				if(data === "fail"){
+					console.log(data);
+				}else{
+					var formData2 = $("#frm").serialize();
+					formData2.append('photoPath', data);
+					$.ajax({
+						type:"post"
+						,data:formData
+						,url:"photoWrite"
+						,success: function(data) {
+							alert("작성완료");
+							location.href="photo";
+						}
+						,error: function() {
+							alert("오류발생")
+						}
+					});
+				}
+			},
+			error: function(data){
+				console.log(data);
+			}
+		}); //$.ajax
+	}
+
 /*
 	$("#registerCheck").click(function(){
 

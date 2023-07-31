@@ -56,6 +56,11 @@
 							<c:if test="${userDto.tel != null}">
 								<h6>tel : ${userDto.tel}</h6>
 							</c:if>
+							<div style="display: none">
+								<input name="imgPath"  id="fileInputTag" type="file" class="form-control" aria-label="file example" required accept="image/*">
+								<button id="writeBtn" type="button" class="btn btn-primary" style="padding: 20px;"><i class="fa-solid fa-check"></i>프로필 사진 업로드</button>
+							</div>
+							<label for="fileInputTag" class="btn btn-primary"><i class="fa-solid fa-camera"></i>사진 변경</label>
 						</div>
 
 						<div class="span2">
@@ -114,6 +119,47 @@
 		}
 	});
 
+	$("input[name='imgPath']").change(function() {
+		Swal.fire({
+			icon : 'question',
+			title: '프로필 사진 변경',
+			text : '선택하신 사진으로 프로필을 변경하시겠습니까?',
+			showCancelButton: true,
+			confirmButtonText: '변경',
+			cancelButtonText : '취소',
+		}).then((result) => {
+			if (result.isConfirmed) {
+
+				var formData = new FormData();
+				var inputFile = $("input[name='imgPath']");
+				files = inputFile[0].files;
+				console.log("---------------")
+				console.log(files);
+				console.log("---------------")
+
+				for (var i = 0; i < files.length; i++) {
+					formData.append("uploadFile", files[i]);
+				}
+
+				$.ajax({
+					url: "uploadProfile"
+					,processData: false
+					,contentType: false
+					,data: formData
+					,type: "POST"
+					,success: function(result){
+						console.log("uploaded");
+						console.log(result);
+
+						if(result!=null){
+							console.log("if 문까지 왔음");
+							location.reload();
+						}
+					}//success
+				})//ajax
+			} // ~ (end) 확인 버튼 눌럿을때
+		}) // ~ (end) swal 닫을때
+	})  // ~ (end) 프로필 수정 이벤트 감지
 	/*
         $("#registerCheck").click(function(){
 

@@ -27,8 +27,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl:1.2'
-//	implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    implementation files('libs/ojdbc6.jar')
+	implementation 'commons-io:commons-io:2.12.0'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
