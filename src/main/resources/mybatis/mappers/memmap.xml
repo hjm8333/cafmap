@@ -22,4 +22,12 @@
         select * from user where userId = #{userId}
     </select>
 
+    <select id="getProfilePath" resultType="String" parameterType="hashmap">
+        SELECT imgPath from user where userId = #{userId}
+    </select>
+
+    <update id="writeProfileImg" parameterType="hashmap">
+        UPDATE user SET imgPath=#{imgPath} where userId = #{userId}
+    </update>
+
 </mapper>
