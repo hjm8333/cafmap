@@ -173,4 +173,78 @@ public class MemController {
 		}
 		return result;
 	}
+
+	@RequestMapping("/modify")
+	public ResponseEntity<String> modify(@RequestParam HashMap<String, String> params, HttpSession session) {
+		log.info("UserController ===> POST modify ===> start");
+
+		log.info("params "+params);
+
+		if(service.nickName(params)!=null) {
+			log.info("UserController ====> 닉네임 사용불가");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("nick");
+		}
+
+		// 사용자가 입력한 "현재" 비밀번호
+		String strFromInput = params.get("pwd");
+
+		// 입력받은 id값을 바탕으로 db에서 유저 조회
+		MemDto user = service.login(params);
+
+		// 데이터베이스의 비밀번호
+		String strFromDatabase = user.getPwd();
+
+		// 비교하여 true 인 경우 사용자 입력 비밀번호가 데이터베이스에 암호화되어 저장된 비밀번호와 일치
+		boolean passwordMatches = strFromInput.equals(strFromDatabase);
+
+		log.info("@@# params => " + params);
+
+		// 현재 비밀번호와 데이터베이스 조회 비밀번호가 일치하고
+		if (passwordMatches) {
+
+			//★=> 만약, 비밀번호 변경에 체크되었다면 => 새 비밀번호와 새 비밀번호 확인
+			if ( params.get("pwdChanged").equals("true") ) {
+				String password = params.get("newPassword");
+				String password2 = params.get("newPassword2");
+
+				// 새 비밀번호와 새 비밀번호 확인이 일치하고, 비밀번호 란이 공백이 아닌 경우
+				if(password.equals(password2) && (!password.isEmpty())) {
+
+					// params 값을 새 비번으로 바꿔치기
+					params.replace("pwd", password);
+
+					// 새로 설정한 닉네임과 비밀번호를 setter 로 세션 재설정
+					service.modify(params);
+
+					// 변경된 정보 세션에 반영하기
+					MemDto modifiedUser = service.login(params);
+					session.setAttribute("userDto", modifiedUser);
+
+					log.info("UserController ===> POST modify ===> if");
+
+					return ResponseEntity.status(HttpStatus.OK).body("success");
+				} else {
+					// 비밀번호 변경하기 체크는 했지만,   새 비밀번호와  새 비밀번호 확인을 서로 다르게 입력한 경우
+					log.info("UserController ===> POST modify ===> else");
+					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fail");
+				}
+
+				//★=> 만약, 비밀번호 변경에 체크가 안되었다면 ( 닉네임만 변경, 기존 비밀번호 사용한다는 뜻 )
+			} else if ( params.get("pwdChanged").equals("false") ) {
+
+				// 비밀번호는 DB에서 가져온 암호화된 기존 비밀번호 그대로 쓰도록 함
+				params.replace("pwd", strFromDatabase);
+				service.modify(params);
+
+				// 변경된 정보 세션에 반영하기
+				MemDto modifiedUser = service.login(params);
+				session.setAttribute("userDto", modifiedUser);
+
+				return ResponseEntity.status(HttpStatus.OK).body("success");
+			}
+
+
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fail");
+	}
 }

@@ -39,6 +39,18 @@ public class MemServiceImpl implements MemService{
 	}
 
 	@Override
+	public MemDto nickName(HashMap<String, String> param) {
+
+		log.info("======================== MemServiceImpl.login() start ========================");
+
+		MemDto dto = dao.nickName(param);
+
+		log.info("======================== MemServiceImpl.login() end ========================");
+
+		return dto;
+	}
+
+	@Override
 	public void write(HashMap<String, String> param) {
 		log.info("======================== MemServiceImpl.write() start ========================");
 		dao.write(param);
@@ -117,6 +129,15 @@ public class MemServiceImpl implements MemService{
 
 		log.info("UserService ===> write ===> end");
 		return false;
+	}
+
+	@Override
+	public void modify(HashMap<String, String> params) {
+		log.info("UserService ===> modify ===> start");
+
+		dao.modify(params);
+
+		log.info("UserService ===> modify ===> end");
 	}
 
 }

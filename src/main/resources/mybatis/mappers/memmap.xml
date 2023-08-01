@@ -30,4 +30,11 @@
         UPDATE user SET imgPath=#{imgPath} where userId = #{userId}
     </update>
 
+    <update id="modify" parameterType="hashmap">
+        UPDATE user SET pwd=#{pwd}, nickname=#{nickname}, tel=#{tel} where id = #{id}
+    </update>
+
+    <select id="nickName" resultType="com.cafmap.dto.MemDto">
+        select * from user where nickname = #{nickname}
+    </select>
 </mapper>

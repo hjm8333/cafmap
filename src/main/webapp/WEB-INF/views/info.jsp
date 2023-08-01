@@ -27,6 +27,9 @@
 		border: 1px solid #b5b5b5;
 		outline: none;
 	}
+	div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel {
+		font-size: 3em;
+	}
 </style>
 
 <body>
@@ -84,7 +87,7 @@
 							<div class="btn-group" style="position: absolute;
 															top: 500px;
 															right: 70px;">
-								<input type="button" value="로그아웃" onclick="location.href='logout'">
+								<button class="btn btn-primary" style="background-color: #b67f5f; border: black;" type="button" onclick="location.href='logout'"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</button>
 							</div>
 						</div>
 					</div>
@@ -120,7 +123,7 @@
 							<div class="form-wrapper">
 								<form id="modifyForm" action="modify" method="POST">
 									<div class="form-floating mb-3">
-										<input name="id" type="text" class="form-control" id="floatingId" value="${ userDto.id }" placeholder="umjoonsik" style="color:grey" disabled>
+										<input name="id" type="text" class="form-control" id="floatingId" value="${ userDto.id }" placeholder="umjoonsik" style="color:grey" readonly>
 										<label class="labels" for="floatingId" style="bottom: 199px;"><i>*</i>
 											아이디</label>
 									</div>
@@ -132,7 +135,7 @@
 									</div>
 
 									<div class="form-floating mb-3">
-										<input name="tel" type="text" maxlength="14" class="form-control" id="floatingTel" oninput="oninputPhone(this)" placeholder="010-0000-0000" value="${userDto.tel}"/>
+										<input name="tel" type="text" maxlength="13" class="form-control" id="floatingTel" oninput="oninputPhone(this)" placeholder="010-0000-0000" value="${userDto.tel}"/>
 										<label class="labels" for="floatingTel" style="bottom: 122px;"><i>*</i>
 											전화번호</label>
 									</div>
@@ -150,16 +153,16 @@
 									<div class="new-password-input-area" style="display: none;">
 										<input type="hidden" name="pwdChanged" value="false">
 										<!-- 변경하기 버튼 눌렀을때만 보이는 영역 -->
-										<div class="form-floating mb-3">
+										<div class="form-floating mb-3" style="margin-top: -5px">
 											<input name="newPassword" type="password" class="form-control" id="floatingPassword" placeholder="비밀번호">
-											<label class="labels" for="floatingPassword"><i>*</i>
+											<label class="labels" for="floatingPassword" style="bottom: 45px"><i>*</i>
 												새 비번</label>
 										</div>
 
 										<div class="form-floating mb-3">
-											<input name="newPassword2" type="password" class="form-control" id="floatingPassword2" placeholder="비밀번호">
-											<label class="labels" for="floatingPassword2"><i>*</i>
-												새 비번 확인</label>
+											<input name="newPassword2" type="password" class="form-control" id="floatingPassword2" placeholder="비밀번호 확인">
+											<label class="labels" for="floatingPassword2" style="bottom: 6px"><i>*</i>
+												비번확인</label>
 										</div>
 									</div>
 
@@ -167,12 +170,12 @@
 							</div>
 
 							<div class="modify-footer">
-								<br><hr>
+								<hr style="margin: 0 0 5px;">
 								<div class="btns">
-									<button id="modifyInfo" type="button" class="btn btn-primary"><i class="fa-solid fa-user-check"></i>
+									<button id="modifyInfo" type="button" class="btn btn-primary" style="background-color: #b67f5f; border-color: black; margin: 10px 0 10px 0;"><i class="fa-solid fa-user-check"></i>
 										저장하기</button>
 								</div>
-								<h1 style="color: grey;">아니면</h1>
+								<h1 style="color: grey; font-size: 23px; margin: 0">아니면</h1>
 								<a href="#" id="unregister">회원탈퇴</a>
 							</div>
 						</div>
@@ -254,7 +257,6 @@
 						console.log(result);
 
 						if(result!=null){
-							console.log("if 문까지 왔음");
 							$.ajax({
 								type: "POST"
 								,url: "getProfileImgPath"
@@ -264,16 +266,17 @@
 								}
 							})
 						}
-					}//success
-				})//ajax
-			} // ~ (end) 확인 버튼 눌럿을때
-		}) // ~ (end) swal 닫을때
-	})  // ~ (end) 프로필 수정 이벤트 감지
+					}
+				})
+			}
+		})
+	})
+
 
 	// ====================== 비밀번호 변경 버튼 눌렀을 때 처리 ===========================================
 	$("#passwordChange").click(function(){
 		const target = $(".new-password-input-area");
-		if ( target.css("display") == "none" ) {
+		if ( target.css("display") === "none" ) {
 			$("input[name='pwdChanged']").val("true");
 			$(this).html('<i class="fa-solid fa-user-lock"></i> 변경취소');
 			target.slideDown();
@@ -294,7 +297,6 @@
 			,data: formData
 			,url: "modify"
 			,success: function(data, status){
-
 				Swal.fire({
 					icon: 'success',
 					title: '수정 성공',
@@ -303,20 +305,27 @@
 					confirmButtonText: '확인'
 				})
 						.then(function(){
-							//location.href = "/smile/user/info";
-							location.href =  urlConverter("user/info");
+							location.reload();
 						})
 			}
-			,error : function(){
-				//alert("비밀번호가 일치하지 않습니다!");
-
-				Swal.fire({
-					icon: 'warning',
-					title: '변경 실패',
-					text: "비밀번호를 다시 확인해주세요",
-					showCancelButton: false,
-					confirmButtonText: '확인'
-				})
+			,error : function(data){
+				if(data.responseText === "fail") {
+					Swal.fire({
+						icon: 'warning',
+						title: '변경 실패',
+						text: "비밀번호를 다시 확인해주세요",
+						showCancelButton: false,
+						confirmButtonText: '확인'
+					})
+				} else {
+					Swal.fire({
+						icon: 'warning',
+						title: '변경 실패',
+						text: "닉네임 중복입니다!",
+						showCancelButton: false,
+						confirmButtonText: '확인'
+					})
+				}
 			}
 		});
 	});
@@ -366,12 +375,12 @@
 		if ($(newPassword1).val().length > 0 ) {
 			if ($(this).val() == newPassword2.val() ) {
 				$(newPassword1).css("backgroundColor", "white");
-				$(newPassword1).next().html("<i>*</i> 새 비밀번호");
+				$(newPassword1).next().html("<i>*</i> 새 비번");
 				$(newPassword2).css("backgroundColor", "white");
-				$(newPassword2).next().html("<i>*</i> 새 비밀번호 확인");
+				$(newPassword2).next().html("<i>*</i> 비번확인");
 			} else {
-				$(newPassword1).css("backgroundColor", "yellow");
-				$(newPassword1).next().html('<i class="fa-solid fa-triangle-exclamation" style="color: #6f8ab8;"></i> 새 비밀번호 확인란에 입력된 내용과 다릅니다.');
+				$(newPassword1).css("backgroundColor", "red");
+				$(newPassword1).next().html('<i class="fa-solid fa-triangle-exclamation" style="color: #6f8ab8;"></i>* 다름');
 			}
 		}
 	})
@@ -380,12 +389,12 @@
 		if ($(newPassword2).val().length > 0 ) {
 			if ($(this).val() == newPassword1.val() ) {
 				$(newPassword1).css("backgroundColor", "white");
-				$(newPassword1).next().html("<i>*</i> 새 비밀번호");
+				$(newPassword1).next().html("<i>*</i> 새 비번");
 				$(newPassword2).css("backgroundColor", "white");
-				$(newPassword2).next().html("<i>*</i> 새 비밀번호 확인");
+				$(newPassword2).next().html("<i>*</i> 비번확인");
 			} else {
-				$(newPassword2).css("backgroundColor", "yellow");
-				$(newPassword2).next().html('<i class="fa-solid fa-triangle-exclamation" style="color: #6f8ab8;"></i> 새 비밀번호란에 입력된 내용과 다릅니다.');
+				$(newPassword2).css("backgroundColor", "red");
+				$(newPassword2).next().html('<i class="fa-solid fa-triangle-exclamation" style="color: #6f8ab8;"></i>* 다름');
 			}
 		}
 	})
