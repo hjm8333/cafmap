@@ -236,6 +236,99 @@
 		transform : translateX(-50%) translateY(-50%);
 	}
 
+	.form-group{
+		margin-bottom: 15px;
+	}
+
+	.form-group input{
+		font-size: 16px;
+	}
+
+	label{
+		margin-bottom: 15px;
+	}
+
+	input,
+	input::-webkit-input-placeholder {
+		font-size: 16px;
+		padding-top: 3px;
+	}
+
+	.main-login{
+		background-color: #fff;
+		/* shadows and rounded borders */
+		-moz-border-radius: 2px;
+		-webkit-border-radius: 2px;
+		border-radius: 2px;
+		-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+		-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+	}
+
+	.main-center{
+		font-size: 28px;
+		margin: 0 auto;
+		padding: 0 75px 0 75px
+
+	}
+
+	.login-button{
+		margin-top: 5px;
+	}
+
+	.login-register{
+		font-size: 11px;
+		text-align: center;
+	}
+	.form-group input {
+		height: 40px;
+	}
+	.form-group label {
+		margin-bottom: -31px !important;
+		margin-right: 6px;
+		position: relative;
+		z-index: 9;
+		font-size: 17px;
+		color: darkgray;
+		display: block;
+	}
+
+	.input-group-addon {
+		background-color: #b67f5f;
+		color: white;
+	}
+
+	.circle {
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		cursor: pointer;
+	}
+
+	/* 색상 변경을 위한 클래스들 */
+	.red {
+		background-color: red;
+	}
+
+	.green {
+		background-color: green;
+	}
+
+	.blue {
+		background-color: blue;
+	}
+
+	/* 원을 선택한 경우, 해당 원에 테두리를 표시합니다. */
+	.selected-circle {
+		border: 2px solid black;
+	}
+
+	/* 항목 이름을 숨기기 위한 클래스 */
+	.hidden {
+		display: none;
+	}
 
 </style>
 
@@ -321,9 +414,12 @@
 					var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 					detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
-					var content = '<div class="bAddr">' +
+					var content = '<div class="bAddr" style="border: 10px">' +
 							'<span class="title">법정동 주소정보</span>' +
 							detailAddr +
+							'</div>' +
+							'<div style="display: flex; margin: -3px 0 0 0; height: 40px; justify-content: center;">' +
+							'<button onclick="addCustomPlace()" type="button" class="btn btn-primary" style="background-color: #b67f5f; border-color: black; height: 30px;"><i class="fa-solid fa-mug-saucer"></i> 장소 저장</button>' +
 							'</div>';
 
 					// 마커를 클릭한 위치에 표시합니다
@@ -336,6 +432,103 @@
 				}
 			});
 		});
+
+		function addCustomPlace() {
+			Swal.fire({
+				width : 700
+				, showConfirmButton : false
+				, html: `<div class="container" style="width: 100%; min-height: 700px">
+			<div class="row main">
+				<div class="panel-heading" style="padding: 0px 10px;">
+	               <div class="panel-title text-center">
+	               		<h1 class="title">카페 등록</h1>
+	               	</div>
+	            </div>
+				<div class="main-login main-center">
+					<form class="form-horizontal" method="post" action="#">
+
+						<div class="select_img"><img id="previewImage" src="../../resources/imgs/defaultPic.png" style="width: 500px; height: 400px; border-radius: 10px;"/></div>
+
+							<div style="display: none">
+								<input name="imgPath"  id="fileInputTag" type="file" class="form-control" aria-label="file example" required accept="image/*">
+								<button id="writeBtn2" type="button" class="btn btn-primary" style="padding: 20px;"><i class="fa-solid fa-check"></i>사진 업로드</button>
+							</div>
+							<label for="fileInputTag" class="btn btn-primary"
+								   style="background-color: #b67f5f; border-color: black; margin: 10px"><i class="fa-solid fa-camera"></i> 사진 넣기</label>
+
+						<div class="form-group">
+							<label for="name" class="cols-sm-2 control-label">이름</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="name" id="name"  placeholder="카페 이름을 써 주세요"/>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="cols-sm-2 control-label">설명</label>
+							<div class="cols-sm-10">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+									<input type="text" class="form-control" name="email" id="email"  placeholder="카페 설명을 간단히 써 주세요"/>
+								</div>
+							</div>
+						</div>
+						<div class="container mt-4">
+							<h3>색깔이 다른 원을 선택하여 항목의 값을 선택/해제하세요.</h3>
+
+							<!-- 둥근 원을 나타내는 div 요소들 -->
+							<div class="circle red" data-value="1" data-item="스페셜티"></div>
+							<div class="circle green" data-value="10" data-item="자가배전"></div>
+							<div class="circle blue" data-value="100" data-item="약배전"></div>
+							<!-- 나머지 항목들은 생략 -->
+
+							<div class="mt-3">
+								<label>Total Value:</label>
+								<input type="text" id="totalValue" class="form-control" readonly>
+							</div>
+						</div>
+
+<!--						<div class="form-group">-->
+<!--							<label for="username" class="cols-sm-2 control-label">Username</label>-->
+<!--							<div class="cols-sm-10">-->
+<!--								<div class="input-group">-->
+<!--									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>-->
+<!--									<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+
+<!--						<div class="form-group">-->
+<!--							<label for="password" class="cols-sm-2 control-label">Password</label>-->
+<!--							<div class="cols-sm-10">-->
+<!--								<div class="input-group">-->
+<!--									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>-->
+<!--									<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+
+<!--						<div class="form-group">-->
+<!--							<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>-->
+<!--							<div class="cols-sm-10">-->
+<!--								<div class="input-group">-->
+<!--									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>-->
+<!--									<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+
+						<div class="form-group ">
+							<button type="button" class="btn btn-primary btn-lg btn-block login-button" style="background-color: #b67f5f">등록</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>`
+			})
+		}
 
 		var imageSrc2 = '../../resources/imgs/cafap_logo.png', // 마커이미지의 주소입니다
 				imageSize2 = new kakao.maps.Size(40, 44), // 마커이미지의 크기입니다
@@ -368,6 +561,13 @@
 		<c:forEach items="${list}" var="dto" varStatus="status">
 		// DB에서 가져온 위치 정보를 기반으로 커스텀 오버레이를 생성하고 지도에 추가하는 함수
 
+		<c:set var="existingMyReview" value="${false}"/>
+		<c:forEach items="${dto.boardDtoList}" var="boardDto">
+		<c:if test="${boardDto.memDto.userId == userDto.userId}">
+		<c:set var="existingMyReview" value="${true}"/>
+		</c:if>
+		</c:forEach>
+
 		function addCustomOverlay_${dto.placeId}() {
 			var marker = new kakao.maps.Marker({
 				map: map,
@@ -376,22 +576,57 @@
 			});
 
 			var content = `
-        <div class="wrap">
-          <div class="info">
-            <div class="title">${dto.name}<div class="close" onclick="closeOverlay()" title="닫기"></div></div>
-            <div class="body">
-              <div class="img">
-                <img src="${dto.imgPath}" style="border-radius: 5px" width="73" height="70" onclick="clickPicture('${dto.imgPath}')">
-              </div>
-              <div class="desc" onclick="placeInfo_${dto.placeId}()">
-                <div class="ellipsis">${dto.address}</div>
-                <div class="jibun ellipsis">${dto.jibunAddress}</div>
-                <div><a href="${dto.homepage}" target="_blank" class="link">홈페이지</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
+				<div class="wrap">
+				  <div class="info">
+					<div class="title">${dto.name}<div class="close" onclick="closeOverlay()" title="닫기"></div></div>
+					<div class="body">
+					  <div class="img">
+						<img src="${dto.imgPath}" style="border-radius: 5px" width="73" height="70" onclick="clickPicture('${dto.imgPath}')">
+					  </div>
+					  <div class="desc" onclick="placeInfo_${dto.placeId}()">
+						<div class="ellipsis">${dto.address}</div>
+						<div class="jibun ellipsis">${dto.jibunAddress}</div>
+						<div><a href="${dto.homepage}" target="_blank" class="link">홈페이지</a>&nbsp;&nbsp;
+							<c:if test="${(not empty userDto) and existingMyReview}">
+							<text style="color: #b67f5f;">내가 리뷰한 카페</text>
+							</c:if>
+						</div>
+							<span>
+								<div style="display: inline-block; vertical-align: middle;">
+									<span class="star" style="position: absolute;
+										top: 45px;
+										left: -2px;
+										color: #ddd;
+										font-size: 20px;
+										word-break: normal;
+										word-wrap: normal;">
+										★★★★★
+										<span style="width: ${dto.avgScore * 20}%;">★★★★★</span>
+									</span>
+								</div>
+									<text style="color: #b67f5f;
+										font-size: 18px;
+										display: inline-block;
+										vertical-align: middle;
+										text-align: right;
+										position: absolute;
+										bottom: 0px;
+										right: 71px;">${dto.avgScore}</text>
+									<text style="color: #black;
+										    font-size: 14px;
+											display: inline-block;
+											vertical-align: middle;
+											text-align: right;
+											position: absolute;
+											bottom: 2px;
+											right: 4px;">리뷰 ${dto.countReview}개</text>
+							</span>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+    		  `;
 
 
 			var overlay = new kakao.maps.CustomOverlay({
@@ -409,58 +644,271 @@
 
 		function placeInfo_${dto.placeId}() {
 			Swal.fire({
-				title : '상세 정보'
-				, width : 900
+				width : 900
 				, showConfirmButton : false
 				, html: `<div id="spStrap" sp-contents class="initialize" spstrap>
-	<div class="mo-4BC8F294A9 initialize" sp-edit="box" sp-sort-nodrop="fixed">
-		<div sp-edit="box" sp-size sp-sort-nodrop="element" style="" class="initialize">
-			<div sp-edit="box" style="text-align:center;" class="initialize" area="before"
-				draggable="false">
-				<a href="#!" sp-edit="image_button" sp-resize style="width:80%;" class="initialize"
-					draggable="false"><img
-						src="${dto.imgPath}" sp-edit="image"
-						style="width:100%; border-radius: 5px" class="initialize" draggable="false"></a>
-			</div>
+							<div class="mo-4BC8F294A9 initialize" sp-edit="box" sp-sort-nodrop="fixed">
+								<div sp-edit="box" sp-size sp-sort-nodrop="element" style="" class="initialize">
+									<div sp-edit="box" style="text-align:center;" class="initialize" area="before"
+										draggable="false">
+										<a href="#!" sp-edit="image_button" sp-resize style="width:80%;" class="initialize"
+											draggable="false"><img
+												src="${dto.imgPath}" sp-edit="image"
+												style="width:100%; height: 520px; border-radius: 5px" class="initialize" draggable="false"></a>
+									</div>
 
-			<div sp-edit="text" style="padding:1rem 0;text-align:center;" class="initialize" area="before"><span
-					sp-font="40" style="color:#333;"><b>${dto.name}</b></span></div>
+									<div sp-edit="text" style="padding: 10px 0 0 0; text-align:center;" class="initialize" area="before"><span
+											sp-font="40" style="color:#333;"><b>${dto.name}</b></span></div>
+									<div sp-edit="text" style="text-align:center;" class="initialize" area="before" draggable="false">
+										<span sp-font="20" style="color:#888;" draggable="false">${dto.placeInfo}</span><br draggable="false">
+									</div>
+									<div sp-edit="text" style="text-align:center;" class="initialize" area="before" draggable="false">
+										<span sp-font="12" style="color:#888; margin-bottom: 3px;" draggable="false">
+										<a href="https://map.naver.com/?dlevel=12&query=${dto.name}" target="_blank">${dto.address} ${dto.jibunAddress}</a>
+										</span><br draggable="false">
+									</div>
 
-			<div sp-edit="text" style="padding:0;text-align:center;" class="initialize" area="before" draggable="false">
-				<span sp-font="25" style="color:#888;" draggable="false">${dto.placeInfo}</span><br draggable="false">
-			</div>
-			<div sp-edit="text" style="line-height:2;padding:3rem 0 0 0;text-align:center;" class="initialize"
-				area="before" draggable="false"><span sp-font="20" style="color:#fff;background-color:#444;"
-					draggable="false"><b draggable="false">
-					&nbsp;&nbsp;${dto.category}&nbsp;
-					</b></span></div>
+									<div sp-edit="text" style="line-height:2;text-align:center;" class="initialize"
+										area="before" draggable="false"><span sp-font="20" style="color:#fff;background-color:#b67f5f;;"
+											draggable="false"><b draggable="false">
+											&nbsp;&nbsp;${dto.category}&nbsp;
+											</b></span>
 
-			<div class="mo-7A26095118 initialize" sp-edit="box" sp-sort-nodrop="fixed"
-				style="padding:1.5rem 0; text-align:center;">
-				<img sp-edit="icon_svg"
-					src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' fill='%234b5566' viewBox='0 0 24 24'%3E%3Cpath d='M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z'/%3E%3C/svg%3E"
-					class="initialize">
-				<div sp-edit="box" sp-line style="border-top:0.01rem solid rgba(0,0,0,0.05);" class="initialize">‧</div>
-			</div>
+											<span>
+												<div style="display: inline-block; vertical-align: middle;">
+													<span class="star" style="position: absolute;
+																			top: -18px;
+																			color: #ddd;
+																			font-size: 35px;
+																			word-break: normal;
+																			word-wrap: normal;">
+														★★★★★
+														<span style="width: ${dto.avgScore * 20}%;">★★★★★</span>
+													</span>
+												</div>
+													<text style="color: #b67f5f;
+														font-size: 30px;
+														display: inline-block;
+														vertical-align: middle;
+														text-align: right;
+														position: absolute;
+														bottom: -11px;
+														right: 27px;">${dto.avgScore}</text>
+											</span>
+											</div>
 
-			<div class="mo-D5BFD24B0D initialize" sp-edit="box" sp-sort-nodrop="fixed"
-				style="text-align:left;padding:2rem 0;">
-				<div sp-edit="box" sp-size class="initialize">
+									<div class="mo-7A26095118 initialize" sp-edit="box" sp-sort-nodrop="fixed"
+										style="padding:1.5rem 0; text-align:center;">
+										<img sp-edit="icon_svg"
+											src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='9' fill='%234b5566' viewBox='0 0 24 24'%3E%3Cpath d='M18 2l6 10.5-6 10.5h-12l-6-10.5 6-10.5z'/%3E%3C/svg%3E"
+											class="initialize">
+										<div sp-edit="box" sp-line style="border-top:0.01rem solid rgba(0,0,0,0.05);" class="initialize">‧</div>
+									</div>
+									<div class="mo-D5BFD24B0D initialize" sp-edit="box" sp-sort-nodrop="fixed"
+										style="text-align:left;padding-bottom: 15px;">
+										<div sp-edit="box" sp-size class="initialize">
 
-					<div class="mo-D5BFD24B0D--text initialize" sp-edit="text"
-						style="padding:1rem 1.5rem;border:.2rem solid #333;background-color:#fff;"><span sp-font="20"
-							style="color:#333;"><b>리뷰</b></span></div>
+											<div class="mo-D5BFD24B0D--text initialize" sp-edit="text"
+												style="padding:1rem 1.5rem;border:.2rem solid #333;background-color:#fff;"><span sp-font="20"
+													style="color:#333;"><b>한줄리뷰</b></span>
+											</div>
 
-					<div class="mo-D5BFD24B0D--line initialize" sp-edit="background"
-						style="padding:.4rem 0;width:100%; text-align: center; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%23333333' viewBox='0 0 100 100'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Crect y='40' width='100' height='20'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;); background-repeat: repeat-x; background-position: center center;">
-					</div>
+											<div class="mo-D5BFD24B0D--line initialize" sp-edit="background"
+												style="padding:.4rem 0;width:100%; text-align: center; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' version='1.1' fill='%23333333' viewBox='0 0 100 100'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Crect y='40' width='100' height='20'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;); background-repeat: repeat-x; background-position: center center;">
+											</div>
 
-				</div>
-			</div>
-		</div>
-	</div>
-</div>`
+										</div>
+									</div>
+										<c:forEach items="${dto.boardDtoList}" var="boardDto">
+											<div sp-edit="text" style="text-align:left;" class="initialize" area="before" draggable="false">
+												<span sp-font="18" style="color:black; margin-bottom: 3px;" draggable="false">
+													<c:choose>
+														<c:when test="${boardDto.memDto.userId == userDto.userId}">
+															<span style="font-weight: 900; color: #b67f5f">
+																${boardDto.memDto.nickname}
+															</span>
+														</c:when>
+														<c:otherwise>
+															<span style="font-weight: 900;">
+																${boardDto.memDto.nickname}
+															</span>
+														</c:otherwise>
+													</c:choose>
+													<span style="font-weight: 900; position: relative; bottom: 2px;">:</span>
+													${boardDto.content}
+													<span>
+														<div style="display: inline-block; vertical-align: middle;">
+															<span class="star" style="
+																top: -6px;
+																color: #ddd;
+																font-size: 25px;
+																word-break: normal;
+																word-wrap: normal;">
+																★★★★★
+																<span style="width: ${boardDto.placeScore * 20}%;">★★★★★</span>
+															</span>
+														</div>
+													</span>
+													<span sp-font="16" style="bottom: 2px; position: relative;"><fmt:formatDate value="${boardDto.created}" dateStyle="default"/>
+														<c:if test="${boardDto.memDto.userId == userDto.userId}">
+															<button type="button" class="swal2-confirm swal2-styled" onclick="deleteBoard_${dto.placeId}(${boardDto.boardId})"
+																style="
+																    display: inline-block;
+																	height: 30px;
+																	width: 45px;
+																	padding: 0px;
+																	margin: 0px 0;
+																	background-color: #b67f5f;
+																	font-size: 1em;
+																">
+															삭제</button>
+														</c:if>
+													</span>
+												</span><br draggable="false">
+											</div>
+										</c:forEach>
+
+										<c:choose>
+											<c:when test="${(not empty userDto) and !existingMyReview}">
+												<div>
+													<form style="display: initial;" id="writeForm_${dto.placeId}">
+													<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
+													<span>
+														<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
+															<span class="star">
+																★★★★★
+																<span id="placeScore" style="width : 60%;">★★★★★</span>
+																<input type="range" name="placeScore" id="starVal" oninput="drawStar(this)" value="6" step="1" min="0" max="10">
+															</span>
+														</div>
+													</span>
+														<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
+														<input type="hidden" value="${dto.placeId}" name="placeId">
+													</form>
+												</div>
+											</c:when>
+											<c:when test="${empty userDto}">
+											<div>
+												<button type="button" class="swal2-confirm swal2-styled" onclick="loginGo_${dto.placeId}()"
+													style="
+													display: inline-block;
+													height: 45px;
+													width: 367;
+													padding: 0px;
+													margin: 0px 0;
+													background-color: #b67f5f;
+													font-size: 2.5em;
+													">
+												로그인하고 리뷰 쓰기</button>
+											</div>
+											</c:when>
+										</c:choose>
+								</div>
+							</div>
+						</div>`
 			})
+		}
+
+		$(document).on("click", "#starVal" ,function() {
+			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
+			let starOk_${dto.placeId} = document.querySelector("#starVal");
+			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
+				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
+				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
+			}
+		})
+
+		$(document).on("keyup", "#writeInput" ,function() {
+			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
+			let starOk_${dto.placeId} = document.querySelector("#starVal");
+			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
+				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
+				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
+			}
+		})
+
+		function deleteBoard_${dto.placeId}(deleteData) {
+
+			var formData = {
+				boardId : deleteData
+			};
+
+			console.log(formData);
+			$.ajax({
+				type: "POST"
+				,data: formData
+				,url: "boardDelete"
+				,success: function(data, status){
+					if (data === 200) {
+						reload_${dto.placeId}()
+					} else {
+						Swal.fire({
+							icon: 'warning',
+							title: '실패',
+							text: "로그인 해주세요!",
+							showCancelButton: false,
+							confirmButtonText: '확인'
+						})
+					}
+				}
+				,error: function(){
+					Swal.fire({
+						icon: 'warning',
+						title: '실패',
+						text: "서버 문제입니다",
+						showCancelButton: false,
+						confirmButtonText: '확인'
+					})
+				}
+			})
+		}
+
+		$(document).on("click", "#writeCheck_${dto.placeId}" ,function() {
+			var formData = $("#writeForm_${dto.placeId}").serialize();
+
+			$.ajax({
+				type: "POST"
+				,data: formData
+				,url: "boardWrite"
+				,success: function(data, status){
+					if (data === 200) {
+						reload_${dto.placeId}()
+					} else {
+						Swal.fire({
+							icon: 'warning',
+							title: '실패',
+							text: "로그인 해주세요!",
+							showCancelButton: false,
+							confirmButtonText: '확인'
+						})
+					}
+				}
+				,error: function(){
+					Swal.fire({
+						icon: 'warning',
+						title: '실패',
+						text: "서버 문제입니다",
+						showCancelButton: false,
+						confirmButtonText: '확인'
+					})
+				}
+			})
+		});
+
+		function reload_${dto.placeId}() {
+			sessionStorage.setItem("reloading", "true");
+			sessionStorage.setItem("writeDtoId", ${dto.placeId});
+			sessionStorage.setItem("writeX", ${dto.widthCoordinate});
+			sessionStorage.setItem("writeY", ${dto.heightCoordinate});
+			document.location.reload();
+		}
+
+		function loginGo_${dto.placeId}() {
+			sessionStorage.setItem("reloading", "true");
+			sessionStorage.setItem("writeDtoId", ${dto.placeId});
+			sessionStorage.setItem("writeX", ${dto.widthCoordinate});
+			sessionStorage.setItem("writeY", ${dto.heightCoordinate});
+			location.href="/login";
 		}
 
 		addCustomOverlay_${dto.placeId}();
@@ -480,8 +928,89 @@
 </body>
 <script>
 	$(document).ready(function() {
+		var reloading = sessionStorage.getItem("reloading");
+		var writeDtoId = sessionStorage.getItem("writeDtoId");
+		if (reloading) {
+			sessionStorage.removeItem("reloading");
+			var functionName = "placeInfo_" + writeDtoId; // 함수 이름 동적으로 생성
+			sessionStorage.removeItem("writeDtoId");
+			if (typeof window[functionName] === 'function') {
+				window[functionName](); // 동적으로 생성된 함수 실행
+			}
+		}
 
-	})// ~~ end
+		$(document).on("change", "input[name='imgPath']", function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(data) {
+					// 미리 보기할 이미지를 선택하고 크기 설정
+					$("#previewImage").attr("src", data.target.result).css("width", "500px");
+				};
+				reader.readAsDataURL(this.files[0]);
+			}
+		});
+
+		function uploadData() {
+			// var formData = new FormData(document.getElementById('uploadForm'));
+			var formData = $("#uploadForm").serialize();
+			$.ajax({
+				url: 'noteWrite_ok',
+				type: 'POST',
+				processData: false,
+				contentType: false,
+				data: formData,
+				success: function (data) {
+					console.log(data);
+					if (data === 200) {
+						alert('글쓰기 성공')
+						window.location.href = 'noteList';
+					} else {
+						alert('실패');
+					}
+				},
+				error: function () {
+					alert('서버와의 통신에 실패했습니다.');
+				}
+			});
+		}
+
+		$(document).on("click", ".circle", function() {
+		// $(".circle").click(function () {
+			// 선택한 둥근 원에 선택 클래스 추가 (테두리 표시)
+			$(this).toggleClass("selected-circle");
+
+			// 선택한 둥근 원들의 값을 합산하여 결과 input 요소에 표시
+			calculateTotal();
+
+			// 해당 원의 항목 이름을 표시하고 2초 후에 사라지도록 합니다.
+			displayItemName($(this).attr("data-item"));
+		});
+
+		function calculateTotal() {
+			var total = 100000000;
+			// 선택된 둥근 원들을 찾아서 값을 합산합니다.
+			$(".circle.selected-circle").each(function () {
+				var value = parseInt($(this).attr("data-value"));
+				total += value;
+			});
+
+			// 합산된 값을 결과 input 요소에 표시합니다.
+			$("#totalValue").val(total);
+		}
+
+		function displayItemName(itemName) {
+			var itemNameElement = $("<div class='item-name'>" + itemName + "</div>");
+			$(".container").append(itemNameElement);
+
+			// 2초 후에 항목 이름 요소를 서서히 사라지게 합니다.
+			setTimeout(function () {
+				itemNameElement.fadeOut(1000, function () {
+					itemNameElement.remove();
+				});
+			}, 10);
+		}
+
+	});
 </script>
 
 

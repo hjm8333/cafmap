@@ -30,6 +30,9 @@
 	div:where(.swal2-container) button:where(.swal2-styled).swal2-cancel {
 		font-size: 3em;
 	}
+	div:where(.swal2-container) button:where(.swal2-styled).swal2-deny {
+		font-size: 3em;
+	}
 </style>
 
 <body>

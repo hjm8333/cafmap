@@ -329,40 +329,15 @@
 <%-- -------------------------------------------------------------------------- --%>
 <section>
 	<!-- -------------------------------------------------------------------------- -->
-<%--	<div>--%>
-<%--		<div style="display: inline-block; vertical-align: middle;">--%>
-<%--        <span class="star">--%>
-<%--            ★★★★★--%>
-<%--            <span>★★★★★</span>--%>
-<%--            <input type="range" id="starVal" oninput="drawStar(this)" value="1" step="1" min="0" max="10">--%>
-<%--        </span>--%>
-<%--		</div>--%>
-<%--		<text style="color: #b67f5f; font-size: 30px; display: inline-block; vertical-align: middle;" id="resultStar">0/5</text>--%>
-<%--	</div>--%>
 
 	<div id="map" style="width:95%;height:85%; margin: 0 auto; display: flex"></div>
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9&libraries=services,clusterer,drawing"></script>
 	<script>
 
-		// $("select[name=category]").change(function() {
-		// 	console.log($(this).val()); // value값 가져오기
-		// 	console.log($("select[name=category] option:selected").text()); // text값 가져오기
-		// 	const selectedText = $("select[name=category] option:selected").text();
-		// 	const Url = "/photo_writeView?cateName=" + encodeURIComponent(selectedText);
-		//
-		// 	// Redirect to the destination URL with the selected text as a query parameter
-		// 	$("#photo_writeView").click(function() {
-		// 		window.location.href = Url;
-		// 	});
-		// });
-
 		function drawStar(target){
 			document.querySelector(`#placeScore`).style.width = `${'${target.value * 10}'}%`;
-			<%--document.getElementById('resultStar').innerText = `${'${(target.value * 10)/20}'}/5`;--%>
 		}
-
-		// let stars = document.getElementById("starVal");
 
 		function clickPicture(ImgUrl) {
 			Swal.fire({

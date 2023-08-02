@@ -87,10 +87,10 @@ public class MemController {
 		log.info("UserController ===> duplicateCheck ====> start");
 
 		if(service.login(params)!=null) {
-			log.info("UserController ====> 이메일 사용불가");
+			log.info("UserController ====> 아이디 사용불가");
 			return ResponseEntity.status(HttpStatus.OK).body(400);
 		}else {
-			log.info("UserController ====> 이메일 사용가능");
+			log.info("UserController ====> 아이디 사용가능");
 			return ResponseEntity.status(HttpStatus.OK).body(200);
 		}
 	}
