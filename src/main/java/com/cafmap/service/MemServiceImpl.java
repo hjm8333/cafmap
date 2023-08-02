@@ -78,7 +78,7 @@ public class MemServiceImpl implements MemService{
 	public boolean writeProfileImg(HashMap<String, String> params, MultipartFile[] uploadFile, HttpSession session) {
 		log.info("UserService ===> write ===> start");
 
-		log.info("지금 서비스단 이야");
+		log.info("서비스까지 왔노");
 		MemDto user = (MemDto) session.getAttribute("userDto");
 		log.info("@# id ===> " +user.getUserId());
 
@@ -90,7 +90,7 @@ public class MemServiceImpl implements MemService{
 
 		// 파일 업로드
 		for(MultipartFile multipartFile : uploadFile) {
-			log.info("서비스단에서 파일 업로드 시작");
+			log.info("서비스에서 파일 업로드 시작");
 			log.info("업로드 되는 파일 이름 ===> " +multipartFile.getOriginalFilename());
 			log.info("업로드 되는 파일 크기 ===> " +multipartFile.getSize());
 			log.info("===========================================");

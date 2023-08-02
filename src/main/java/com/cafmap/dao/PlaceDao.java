@@ -17,4 +17,5 @@ public interface PlaceDao {
     public void boardWrite(@RequestParam HashMap<String, String> param);
     public void boardUpdate(@RequestParam HashMap<String, String> param);
     public void boardDelete(int boardId);
+    public void writePlace(@RequestParam HashMap<String, String> param);
 }

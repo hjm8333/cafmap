@@ -14,4 +14,5 @@ public interface MemService {
 	public String getProfilePath(HashMap<String, String> params, HttpSession session);
 	public boolean writeProfileImg(HashMap<String, String> params, MultipartFile[] uploadFile, HttpSession session);
     public void modify(HashMap<String, String> params);
+
 }

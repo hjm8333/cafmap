@@ -30,4 +30,8 @@
         delete from board where boardId = #{boardId}
     </delete>
 
+    <insert id="writePlace" parameterType="hashmap">
+        insert into my_place (widthCoordinate, heightCoordinate, address, jibunAddress, category, name, imgPath, placeInfo, userId) values (#{widthCoordinate}, #{heightCoordinate}, #{address}, #{jibunAddress}, #{category}, #{name}, #{imgPath}, #{placeInfo}, #{userId})
+    </insert>
+
 </mapper>

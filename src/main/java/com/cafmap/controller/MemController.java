@@ -135,7 +135,7 @@ public class MemController {
 		// 기존 이미지가 존재한다면, 해당 파일을 찾아서 삭제한다
 		if ( user.getImgPath() != null ) {
 			File deleteFile = new File(user.getImgPath()); // 삭제할 파일의 위치로 이동해서
-			if ( deleteFile.exists() == true ) { deleteFile.delete();	} // 삭제할 파일이 존재한다면 삭 -제 해버림
+			if ( deleteFile.exists() == true ) { deleteFile.delete();	} // 삭제할 파일이 존재한다면 삭-제
 		}
 
 		user.setImgPath(newProfilePath);				// 새 프로필이미지 경로+파일명을 setter 로 DTO에 설정하고

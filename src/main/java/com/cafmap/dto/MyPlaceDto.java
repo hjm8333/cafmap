@@ -15,7 +15,6 @@ public class MyPlaceDto {
     private double heightCoordinate;
     private String address;
     private String jibunAddress;
-    private double avgScore;
     private String category;
     private String name;
     private String placeInfo;

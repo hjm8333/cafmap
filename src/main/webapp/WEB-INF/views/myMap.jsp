@@ -301,33 +301,51 @@
 
 	.circle {
 		display: inline-block;
-		width: 50px;
-		height: 50px;
+		width: 35px;
+		height: 35px;
 		border-radius: 50%;
 		cursor: pointer;
 	}
 
-	/* 색상 변경을 위한 클래스들 */
-	.red {
-		background-color: red;
-	}
-
-	.green {
-		background-color: green;
-	}
-
-	.blue {
-		background-color: blue;
-	}
-
-	/* 원을 선택한 경우, 해당 원에 테두리를 표시합니다. */
+	/* 원을 선택한 경우, 해당 원 투명도 연하게 */
 	.selected-circle {
-		border: 2px solid black;
+		opacity: 0.2;
 	}
 
 	/* 항목 이름을 숨기기 위한 클래스 */
 	.hidden {
 		display: none;
+	}
+
+	.item-name {
+		font-size: 25px;
+		position: absolute;
+		top: 641px;
+		right: 74px;
+	}
+
+	.in_circle {
+		display: table;
+		margin: 4px 0 0 8px;
+		color: white;
+		font-weight: 900;
+	}
+
+	/* 선택된 항목을 표시하기 위한 박스 */
+	.selected-items {
+		border: 1px solid #ccc;
+		padding: 5px;
+		margin-top: 10px;
+		min-height: 40px;
+		width: 564px;
+		margin-left: -25px;
+		background-color: black;
+		color: white;
+		font-weight: 900;
+	}
+	.form-control {
+		font-size: 25px;
+		font-weight: 600;
 	}
 
 </style>
@@ -403,9 +421,18 @@
 
 		var geocoder = new kakao.maps.services.Geocoder();
 
+		var widthCoordinate = ""
+		var heightCoordinate = ""
+		var address = "";
+		var jibunAddress = "";
+
+
 		function searchDetailAddrFromCoords(coords, callback) {
 			// 좌표로 법정동 상세 주소 정보를 요청합니다
 			geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+
+			widthCoordinate = coords.getLng();
+			heightCoordinate = coords.getLat();
 		}
 
 		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
@@ -413,6 +440,9 @@
 				if (status === kakao.maps.services.Status.OK) {
 					var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
 					detailAddr += '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
+
+					address = !!result[0].road_address ? result[0].road_address.address_name : '';
+					jibunAddress = result[0].address.address_name;
 
 					var content = '<div class="bAddr" style="border: 10px">' +
 							'<span class="title">법정동 주소정보</span>' +
@@ -445,7 +475,7 @@
 	               	</div>
 	            </div>
 				<div class="main-login main-center">
-					<form class="form-horizontal" method="post" action="#">
+					<form class="form-horizontal" id="writePlaceForm" method="post" action="#">
 
 						<div class="select_img"><img id="previewImage" src="../../resources/imgs/defaultPic.png" style="width: 500px; height: 400px; border-radius: 10px;"/></div>
 
@@ -457,7 +487,7 @@
 								   style="background-color: #b67f5f; border-color: black; margin: 10px"><i class="fa-solid fa-camera"></i> 사진 넣기</label>
 
 						<div class="form-group">
-							<label for="name" class="cols-sm-2 control-label">이름</label>
+							<label for="name" class="cols-sm-2 control-label" style="width: 35px; float: right;">이름</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i></span>
@@ -467,27 +497,35 @@
 						</div>
 
 						<div class="form-group">
-							<label for="email" class="cols-sm-2 control-label">설명</label>
+							<label for="placeInfo" class="cols-sm-2 control-label" style="width: 35px; float: right;">설명</label>
 							<div class="cols-sm-10">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="email" id="email"  placeholder="카페 설명을 간단히 써 주세요"/>
+									<input type="text" class="form-control" name="placeInfo" id="placeInfo"  placeholder="카페 설명을 간단히 써 주세요"/>
 								</div>
 							</div>
 						</div>
-						<div class="container mt-4">
-							<h3>색깔이 다른 원을 선택하여 항목의 값을 선택/해제하세요.</h3>
-
+						<div class="mt-4" style="font-size: 18px">
+							<p class="cate_container" style="font-weight: 900">카페에 맞는 태그를 골라주세요!</p>
 							<!-- 둥근 원을 나타내는 div 요소들 -->
-							<div class="circle red" data-value="1" data-item="스페셜티"></div>
-							<div class="circle green" data-value="10" data-item="자가배전"></div>
-							<div class="circle blue" data-value="100" data-item="약배전"></div>
-							<!-- 나머지 항목들은 생략 -->
-
-							<div class="mt-3">
-								<label>Total Value:</label>
-								<input type="text" id="totalValue" class="form-control" readonly>
+							<div class="circle" style="background-color: #127822" data-value="1" data-item="스페셜티"><p class="in_circle">스</p></div>
+							<div class="circle" style="background-color: #ce4e09" data-value="10" data-item="자가배전"><p class="in_circle">자</p></div>
+							<div class="circle" style="background-color: #a07504" data-value="100" data-item="약배전"><p class="in_circle">약</p></div>
+							<div class="circle" style="background-color: #311c00" data-value="1000" data-item="강배전"><p class="in_circle">강</p></div>
+							<div class="circle" style="background-color: #beb006" data-value="10000" data-item="베이커리"><p class="in_circle">베</p></div>
+							<div class="circle" style="background-color: #5d391c" data-value="100000" data-item="앤틱"><p class="in_circle">앤</p></div>
+							<div class="circle" style="background-color: #0b35b7" data-value="1000000" data-item="모던"><p class="in_circle">모</p></div>
+							<div class="circle" style="background-color: #990080" data-value="10000000" data-item="힙"><p class="in_circle">힙</p></div>
+							<div class="selected-items">
+										<strong></strong>
+										<span id="selectedItems"></span>
 							</div>
+								<input type="hidden" name ="category" id="totalValue" class="form-control" value="100000000">
+								<input type="hidden" name ="widthCoordinate" id="widthCoordinate" class="form-control">
+								<input type="hidden" name ="heightCoordinate" id="heightCoordinate" class="form-control">
+								<input type="hidden" name ="address" id="address" class="form-control">
+								<input type="hidden" name ="jibunAddress" id="jibunAddress" class="form-control">
+								<input type="hidden" name ="userId" id="userId" class="form-control" value="${userDto.userId}">
 						</div>
 
 <!--						<div class="form-group">-->
@@ -521,7 +559,7 @@
 <!--						</div>-->
 
 						<div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg btn-block login-button" style="background-color: #b67f5f">등록</button>
+							<button type="button" id="writePlace" class="btn btn-primary btn-lg btn-block login-button" style="background-color: gray" disabled>등록</button>
 						</div>
 					</form>
 				</div>
@@ -809,24 +847,6 @@
 			})
 		}
 
-		$(document).on("click", "#starVal" ,function() {
-			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
-			let starOk_${dto.placeId} = document.querySelector("#starVal");
-			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
-				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
-				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
-			}
-		})
-
-		$(document).on("keyup", "#writeInput" ,function() {
-			let writeOk_${dto.placeId} = document.querySelector("#writeInput");
-			let starOk_${dto.placeId} = document.querySelector("#starVal");
-			switch(!(writeOk_${dto.placeId}.value && starOk_${dto.placeId}.value)){
-				case false : $("#writeCheck_${dto.placeId}").prop("disabled", false); $("#writeCheck_${dto.placeId}").css("background", "#444444"); break;
-				case true : $("#writeCheck_${dto.placeId}").prop("disabled", true); $("#writeCheck_${dto.placeId}").css("background", "#bbbbbb"); break;
-			}
-		})
-
 		function deleteBoard_${dto.placeId}(deleteData) {
 
 			var formData = {
@@ -950,30 +970,6 @@
 			}
 		});
 
-		function uploadData() {
-			// var formData = new FormData(document.getElementById('uploadForm'));
-			var formData = $("#uploadForm").serialize();
-			$.ajax({
-				url: 'noteWrite_ok',
-				type: 'POST',
-				processData: false,
-				contentType: false,
-				data: formData,
-				success: function (data) {
-					console.log(data);
-					if (data === 200) {
-						alert('글쓰기 성공')
-						window.location.href = 'noteList';
-					} else {
-						alert('실패');
-					}
-				},
-				error: function () {
-					alert('서버와의 통신에 실패했습니다.');
-				}
-			});
-		}
-
 		$(document).on("click", ".circle", function() {
 		// $(".circle").click(function () {
 			// 선택한 둥근 원에 선택 클래스 추가 (테두리 표시)
@@ -984,6 +980,9 @@
 
 			// 해당 원의 항목 이름을 표시하고 2초 후에 사라지도록 합니다.
 			displayItemName($(this).attr("data-item"));
+
+			// 선택한 항목들을 표시하는 박스 업데이트
+			updateSelectedItems();
 		});
 
 		function calculateTotal() {
@@ -1000,16 +999,81 @@
 
 		function displayItemName(itemName) {
 			var itemNameElement = $("<div class='item-name'>" + itemName + "</div>");
-			$(".container").append(itemNameElement);
+			$(".cate_container").append(itemNameElement);
 
 			// 2초 후에 항목 이름 요소를 서서히 사라지게 합니다.
 			setTimeout(function () {
-				itemNameElement.fadeOut(1000, function () {
+				itemNameElement.fadeOut(500, function () {
 					itemNameElement.remove();
 				});
 			}, 10);
 		}
 
+		function updateSelectedItems() {
+			var selectedItems = [];
+			// 선택된 항목들을 찾아서 배열에 추가합니다.
+			$(".circle.selected-circle").each(function () {
+				var itemName = "#" + $(this).attr("data-item"); // 항목 이름 앞에 "#"를 붙입니다.
+				selectedItems.push(itemName);
+			});
+
+			// 선택한 항목들을 표시하는 박스 업데이트
+			$("#selectedItems").text(selectedItems.join(" "));
+		}
+
+		let placeName = document.querySelector("#name");
+		let placeInfo = document.querySelector("#placeInfo");
+
+		$(document).on("keyup", "#name" ,function() {
+			$("#widthCoordinate").val(widthCoordinate);
+			$("#heightCoordinate").val(heightCoordinate);
+			$("#address").val(address);
+			$("#jibunAddress").val(jibunAddress);
+			placeName = document.querySelector("#name");
+			placeInfo = document.querySelector("#placeInfo");
+			switch(!(placeName.value && placeInfo.value)){
+				case false : $("#writePlace").prop("disabled", false); $("#writePlace").css("background", "#b67f5f"); break;
+				case true : $("#writePlace").prop("disabled", true); $("#writePlace").css("background", "#bbbbbb"); break;
+			}
+		});
+
+		$(document).on("keyup", "#placeInfo" ,function() {
+			$("#widthCoordinate").val(widthCoordinate);
+			$("#heightCoordinate").val(heightCoordinate);
+			$("#address").val(address);
+			$("#jibunAddress").val(jibunAddress);
+			placeName = document.querySelector("#name");
+			placeInfo = document.querySelector("#placeInfo");
+			switch(!(placeName.value && placeInfo.value)){
+				case false : $("#writePlace").prop("disabled", false); $("#writePlace").css("background", "#b67f5f"); break;
+				case true : $("#writePlace").prop("disabled", true); $("#writePlace").css("background", "#bbbbbb"); break;
+			}
+		});
+
+
+		$(document).on("click", "#writePlace", function() {
+			var formData = new FormData(document.getElementById('writePlaceForm'));
+//         var formData = $("#uploadForm").serialize();
+			$.ajax({
+				url: 'noteWrite_ok',
+				type: 'POST',
+				processData: false,
+				contentType: false,
+				data: formData,
+				success: function (data) {
+					console.log(data);
+					if (data) {
+						alert('글쓰기 성공')
+						window.location.href = 'noteList';
+					} else {
+						alert('실패');
+					}
+				},
+				error: function () {
+					alert('서버와의 통신에 실패했습니다.');
+				}
+			});
+		});
 	});
 </script>
 

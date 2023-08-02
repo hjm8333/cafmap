@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,5 +78,23 @@ public class PlaceController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.OK).body(400);
         }
+    }
+
+    @RequestMapping("/writePlace")
+    public ResponseEntity<Integer> uploadProfile(@RequestParam HashMap<String, String> params, MultipartFile[] uploadFile, HttpSession session) {
+        log.info("PlaceController ===> writePlace ===> start");
+
+        log.info("uploadFile ===> "+uploadFile);
+        service.writePlace(params, uploadFile, session);
+
+        MemDto user = (MemDto) session.getAttribute("userDto");
+
+        // 기존 이미지가 존재한다면, 해당 파일을 찾아서 삭제한다
+        if ( user.getImgPath() != null ) {
+            File deleteFile = new File(user.getImgPath()); // 삭제할 파일의 위치로 이동해서
+            if ( deleteFile.exists() == true ) { deleteFile.delete();	} // 삭제할 파일이 존재한다면 삭-제
+        }
+
+        return ResponseEntity.ok().body(200);
     }
 }
