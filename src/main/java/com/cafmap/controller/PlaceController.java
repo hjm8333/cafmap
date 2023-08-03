@@ -27,13 +27,14 @@ public class PlaceController {
     private PlaceService service;
 
     @RequestMapping("/home")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
 
         log.info("@# home");
 
         List<PlaceDto> list = service.placeList();
         log.info(""+list);
         model.addAttribute("list", list);
+        session.setAttribute("now", 1);
 
         return "home";
     }
@@ -47,6 +48,7 @@ public class PlaceController {
             List<MyPlaceDto> list = service.myPlaceList(userDto.getUserId());
             log.info(""+list);
             model.addAttribute("list", list);
+            session.setAttribute("now", 2);
             return "myMap";
         }else {
             return "login";
@@ -80,21 +82,36 @@ public class PlaceController {
         }
     }
 
+    @RequestMapping("/placeDelete")
+    public ResponseEntity<Integer> placeDelete(@RequestParam int placeId) {
+        log.info("@# boardDelete "+placeId);
+        try {
+            service.placeDelete(placeId);
+            return ResponseEntity.status(HttpStatus.OK).body(200);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.OK).body(400);
+        }
+    }
+
     @RequestMapping("/writePlace")
-    public ResponseEntity<Integer> uploadProfile(@RequestParam HashMap<String, String> params, MultipartFile[] uploadFile, HttpSession session) {
+    public ResponseEntity<Integer> writePlace(@RequestParam HashMap<String, String> params, MultipartFile[] uploadFile, HttpSession session) {
         log.info("PlaceController ===> writePlace ===> start");
 
+        log.info("params => "+params);
+
         log.info("uploadFile ===> "+uploadFile);
+
+        if(uploadFile == null) return ResponseEntity.ok().body(400);
         service.writePlace(params, uploadFile, session);
 
-        MemDto user = (MemDto) session.getAttribute("userDto");
+//        MemDto user = (MemDto) session.getAttribute("userDto");
 
-        // 기존 이미지가 존재한다면, 해당 파일을 찾아서 삭제한다
-        if ( user.getImgPath() != null ) {
-            File deleteFile = new File(user.getImgPath()); // 삭제할 파일의 위치로 이동해서
-            if ( deleteFile.exists() == true ) { deleteFile.delete();	} // 삭제할 파일이 존재한다면 삭-제
-        }
+//        // 기존 이미지가 존재한다면, 해당 파일을 찾아서 삭제한다
+//        if ( user.getImgPath() != null ) {
+//            File deleteFile = new File(user.getImgPath()); // 삭제할 파일의 위치로 이동해서
+//            if ( deleteFile.exists() == true ) { deleteFile.delete();	} // 삭제할 파일이 존재한다면 삭-제
+//        }
 
-        return ResponseEntity.ok().body(200);
+        return ResponseEntity.ok().body(service.lastMyPlaceId(Integer.parseInt(params.get("userId"))));
     }
 }

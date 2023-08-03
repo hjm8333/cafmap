@@ -4,6 +4,10 @@
 
     @import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
 
+    *{
+        font-family: Jal_Onuel;
+    }
+
     .nav_main {
         width: 100%;
         height: 10%;
@@ -33,7 +37,7 @@
     .navbar-header h1 {
         letter-spacing: 1px;
         color: black !important;
-        font-family: 'Lobster Two', cursive !important;
+        font-family: 'Jal_Onuel', cursive !important;
     }
 
     .navbar li a, .navbar {
@@ -54,6 +58,20 @@
     @font-face {
         font-family: 'Jal_Onuel';
         src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.0/Jal_Onuel.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'CookieRun-Regular';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'MaplestoryOTFBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
         font-weight: normal;
         font-style: normal;
     }
@@ -122,11 +140,32 @@
         </div>
         <div class="collapse navbar-collapse navbar-right" style="font-family: 'Jal_Onuel';" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="home" style="font-size: x-large;">지도</a></li>
+                <c:choose>
+                    <c:when test="${now == 1}">
+                        <li><a href="home" style="font-size: x-large;"><p style="color: #b67f5f;">지도</p></a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="home" style="font-size: x-large;">지도</a></li>
+                    </c:otherwise>
+                </c:choose>
                 <c:if test="${not empty userDto}">
-                    <li><a href="myMap" style="font-size: x-large;">내지도</a></li>
+                    <c:choose>
+                        <c:when test="${now == 2}">
+                            <li><a href="myMap" style="font-size: x-large;"><p style="color: #b67f5f;">내지도</p></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li><a href="myMap" style="font-size: x-large;">내지도</a></li>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
-                <li><a href="login" style="font-size: x-large;">내정보</a></li>
+                <c:choose>
+                    <c:when test="${now == 3}">
+                        <li><a href="login" style="font-size: x-large;"><p style="color: #b67f5f;">내정보</p></a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="login" style="font-size: x-large;">내정보</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>

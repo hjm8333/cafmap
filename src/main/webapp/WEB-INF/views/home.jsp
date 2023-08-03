@@ -8,11 +8,11 @@
 	<%@ include file="../views/common/navbar.jsp" %>
 </head>
 <style>
-	.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+	.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Jal_Onuel', dotum, '돋움', sans-serif;line-height: 1.5;}
 	.wrap * {padding: 0;margin: 0;}
 	.wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
 	.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-	.info .title {padding-left: 5px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+	.info .title {padding-left: 8px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 21px;font-weight: 500; font-family: 'Jal_Onuel'}
 	.info .close {position: absolute;top: 7px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
 	.info .close:hover {cursor: pointer;}
 	.info .body {position: relative;overflow: hidden;}
@@ -28,9 +28,9 @@
 	@import url("https://fonts.googleapis.com/css2?&family=Roboto:wght@300%3B700&display=swap");
 	@import url("https://fonts.googleapis.com/css2?&family=Noto+Sans+KR:wght@300%3B500&display=swap");
 	#spStrap[sp-contents],
-	#spStrap [sp-contents] { font-family:Roboto,Noto Sans KR,'Apple SD Gothic Neo', 'arial', 'sans-serif', 'serif', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji'; }
-	#spStrap [sp-fontfamily="main"] { font-family:Roboto, 'Apple SD Gothic Neo', 'arial', 'sans-serif', 'serif', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji'; }
-	#spStrap [sp-fontfamily="sub"] { font-family:Noto Sans KR, 'Apple SD Gothic Neo', 'arial', 'sans-serif', 'serif', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+	#spStrap [sp-contents] { font-family: 'Jal_Onuel',Noto Sans KR,'Apple SD Gothic Neo', 'arial', 'sans-serif', 'serif', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+	#spStrap [sp-fontfamily="main"] { font-family: 'Jal_Onuel', 'Apple SD Gothic Neo', 'arial', 'sans-serif', 'serif', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+	#spStrap [sp-fontfamily="sub"] { font-family: 'Jal_Onuel', 'Apple SD Gothic Neo', 'arial', 'sans-serif', 'serif', 'Noto Color Emoji', 'Apple Color Emoji', 'Segoe UI Emoji'; }
 
 	/*!
      * Mocanvas
@@ -41,7 +41,7 @@
 	/*!
      * Container Buildup
      */
-	#spStrap *:not(i) { font-family:inherit; }
+	#spStrap *:not(i) { font-family: 'Jal_Onuel'; }
 
 	[spStrap] { min-width:320px; color:#333; line-height:1.4; position:relative; overflow:hidden; }
 	[spStrap], [spStrap] * { -webkit-box-sizing : border-box !important; -khtml-box-sizing : border-box !important; -moz-box-sizing : border-box !important; -ms-box-sizing : border-box !important; -o-box-sizing : border-box !important; box-sizing : border-box !important; }
@@ -331,6 +331,9 @@
 	<!-- -------------------------------------------------------------------------- -->
 
 	<div id="map" style="width:95%;height:85%; margin: 0 auto; display: flex"></div>
+	<p id="result" style="    display: flex;
+    justify-content: center;"></p>
+
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a87543beac34ad8d2b278a24584916c9&libraries=services,clusterer,drawing"></script>
 	<script>
@@ -369,6 +372,19 @@
 
 		var map = new kakao.maps.Map(container, options);
 
+		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+			// 클릭한 위도, 경도 정보를 가져옵니다
+			var latlng = mouseEvent.latLng;
+
+			var message = '위도 ' + latlng.getLat() + '<br>';
+			message += '경도 ' + latlng.getLng();
+
+			var resultDiv = document.getElementById('result');
+			resultDiv.innerHTML = message;
+
+		});
+
 		var startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 마커이미지의 주소입니다
 			startSize = new kakao.maps.Size(50, 45), // 마커이미지의 크기입니다
 			startOption = {offset: new kakao.maps.Point(15, 43)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -406,7 +422,7 @@
 			var content = `
 				<div class="wrap">
 				  <div class="info">
-					<div class="title">${dto.name}<div class="close" onclick="closeOverlay()" title="닫기"></div></div>
+					<div class="title" style="font-family: 'Jal_Onuel';">${dto.name}<div class="close" onclick="closeOverlay()" title="닫기"></div></div>
 					<div class="body">
 					  <div class="img">
 						<img src="${dto.imgPath}" style="border-radius: 5px" width="73" height="70" onclick="clickPicture('${dto.imgPath}')">
@@ -505,7 +521,8 @@
 											<span>
 												<div style="display: inline-block; vertical-align: middle;">
 													<span class="star" style="position: absolute;
-																			top: -18px;
+																			    top: -112px;
+    																			right: 80px;
 																			color: #ddd;
 																			font-size: 35px;
 																			word-break: normal;
@@ -520,8 +537,8 @@
 														vertical-align: middle;
 														text-align: right;
 														position: absolute;
-														bottom: -11px;
-														right: 27px;">${dto.avgScore}</text>
+														bottom: 87px;
+														right: 22px;">${dto.avgScore}</text>
 											</span>
 											</div>
 
@@ -562,12 +579,12 @@
 															</span>
 														</c:otherwise>
 													</c:choose>
-													<span style="font-weight: 900; position: relative; bottom: 2px;">:</span>
+													<span style="font-weight: 900; position: relative; bottom: 0px;">:</span>
 													${boardDto.content}
 													<span>
 														<div style="display: inline-block; vertical-align: middle;">
 															<span class="star" style="
-																top: -6px;
+																top: 1px;
 																color: #ddd;
 																font-size: 25px;
 																word-break: normal;
@@ -577,7 +594,7 @@
 															</span>
 														</div>
 													</span>
-													<span sp-font="16" style="bottom: 2px; position: relative;"><fmt:formatDate value="${boardDto.created}" dateStyle="default"/>
+													<span sp-font="16" style="bottom: 0px; position: relative;"><fmt:formatDate value="${boardDto.created}" dateStyle="default"/>
 														<c:if test="${boardDto.memDto.userId == userDto.userId}">
 															<button type="button" class="swal2-confirm swal2-styled" onclick="deleteBoard_${dto.placeId}(${boardDto.boardId})"
 																style="
@@ -600,9 +617,9 @@
 											<c:when test="${(not empty userDto) and !existingMyReview}">
 												<div>
 													<form style="display: initial;" id="writeForm_${dto.placeId}">
-													<input style="margin-left: -5px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
+													<input style="margin-left: -17px;" type="text" name="content" id="writeInput" placeholder="리뷰를 작성해 보세요!">
 													<span>
-														<div style="display: inline-block; vertical-align: middle; margin-bottom: 12px;">
+														<div style="display: inline-block; vertical-align: middle; margin-bottom: -3px;">
 															<span class="star">
 																★★★★★
 																<span id="placeScore" style="width : 60%;">★★★★★</span>
@@ -610,7 +627,7 @@
 															</span>
 														</div>
 													</span>
-														<input style="margin-top: 11px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
+														<input style="margin-top: 4px; background-color: #bbbbbb;" id="writeCheck_${dto.placeId}" type="button" value="작성" disabled>
 														<input type="hidden" value="${dto.placeId}" name="placeId">
 													</form>
 												</div>
@@ -657,6 +674,7 @@
 
 		function deleteBoard_${dto.placeId}(deleteData) {
 
+			if(!confirm("정말 삭제하시겠읍니까?")) return false;
 			var formData = {
 				boardId : deleteData
 			};

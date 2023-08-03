@@ -31,10 +31,11 @@ public class MemController {
 	@RequestMapping("/login")
 	public String login(HttpSession session) {
 		log.info("@# login");
-
 		if(session.getAttribute("userDto") != null) {
+			session.setAttribute("now", 3);
 			return "info";
 		}else {
+			session.setAttribute("now", 3);
 			return "login";
 		}
 	}
@@ -62,8 +63,10 @@ public class MemController {
 		log.info("=============== info");
 
 		if(session.getAttribute("userDto") != null) {
+			session.setAttribute("now", 3);
 			return "info";
 		}else {
+			session.setAttribute("now", 3);
 			return "login";
 		}
 	}
@@ -72,14 +75,8 @@ public class MemController {
 	public String logout(HttpSession session) {
 		log.info("=============== logout");
 		session.removeAttribute("userDto");
+		session.setAttribute("now", 3);
 		return "redirect:login";
-	}
-
-	@RequestMapping("/register")
-	public String register() {
-		log.info("=============== 회원가입");
-		
-		return "register";
 	}
 
 	@RequestMapping("/duplicateCheck")

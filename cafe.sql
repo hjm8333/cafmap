@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
 --
 -- Host: localhost    Database: caf
 -- ------------------------------------------------------
--- Server version	8.0.27
+-- Server version	8.0.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -34,7 +34,7 @@ CREATE TABLE `board` (
   KEY `fk_board_place1_idx` (`placeId`),
   CONSTRAINT `fk_board_place1` FOREIGN KEY (`placeId`) REFERENCES `place` (`placeId`),
   CONSTRAINT `fk_board_user` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `board` (
 
 LOCK TABLES `board` WRITE;
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
-INSERT INTO `board` VALUES (1,'좋읍니다','2023-07-30 07:23:31',9,4,3.5);
+INSERT INTO `board` VALUES (1,'좋읍니다','2023-07-30 07:23:31',9,4,3.5),(14,'지림','2023-08-03 09:00:53',8,3,5);
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +151,7 @@ CREATE TABLE `my_place` (
   PRIMARY KEY (`placeId`),
   KEY `fk_my_place_user1_idx` (`userId`),
   CONSTRAINT `fk_my_place_user1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,6 +160,7 @@ CREATE TABLE `my_place` (
 
 LOCK TABLES `my_place` WRITE;
 /*!40000 ALTER TABLE `my_place` DISABLE KEYS */;
+INSERT INTO `my_place` VALUES (6,35.156751491480705000000000000000,129.060668888892680000000000000000,'부산광역시 부산진구 동천로85번길 34','부산 부산진구 부전동 168-55',101011100,'1sadsad','C:/upload/temp3/1f30c9ba-53c2-47a5-aa38-27e804185aef_bongo.png',NULL,'asdsad',8);
 /*!40000 ALTER TABLE `my_place` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +184,7 @@ CREATE TABLE `place` (
   `homepage` longtext,
   `placeInfo` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`placeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +193,7 @@ CREATE TABLE `place` (
 
 LOCK TABLES `place` WRITE;
 /*!40000 ALTER TABLE `place` DISABLE KEYS */;
-INSERT INTO `place` VALUES (3,35.2000536502156,129.08923386614697,'부산 동래구 충렬대로272번길 15 2층 202호','(우) 47879 (지번) 낙민동 211-5',4.8,'100111011','얼룩개','../../resources/imgs/alookat.jpg','https://www.instagram.com/a.look.at/','엔틱한 바형 강배전 카페'),(4,35.15604680367208,129.0599790283397,'부산 부산진구 서전로10번길 41','(우)47292 (지번) 부전동 168-152',3.5,'101010111','블랙업','../../resources/imgs/blackup.png','https://blackupcoffee.com/','모던한 중약배전 카페');
+INSERT INTO `place` VALUES (3,35.2000536502156,129.08923386614697,'부산 동래구 충렬대로272번길 15 2층 202호','(우) 47879 (지번) 낙민동 211-5',0,'100111011','얼룩개','../../resources/imgs/alookat.jpg','https://www.instagram.com/a.look.at/','부산 최고의 강배전카페. 다찌에서 사장님과의 대화는 덤'),(4,35.15604680367208,129.0599790283397,'부산 부산진구 서전로10번길 41','(우)47292 (지번) 부전동 168-152',0,'101010111','블랙업','../../resources/imgs/blackup.png','https://blackupcoffee.com/','서면 카페중에 드문 맛있는 카페'),(7,35.15634542971108,129.1181559073746,'부산 수영구 광안로49번길 25-1 . 1층(광안동)','48296 광안동 153-32',NULL,'111000111','노아브루어스','../../resources/imgs/noa.png','https://www.instagram.com/noah.brws/','플로랄계열 약배전이 수준급. 시바견이 귀엽다.'),(8,35.145445868409396,128.88575215592024,'부산 강서구 범방4로 32 범방동,이프리오','46727 범방동 1912-2',NULL,'111010101','이프리오','../../resources/imgs/ifrio.png','https://smartstore.naver.com/ifrio','명지 최고의 뷰카페. 맛은 글쎄?'),(9,35.11509029186796,128.9222352681854,'부산 강서구 새진목길 58','46717 명지동 3175-17',NULL,'100101111','로스터리카페미루','../../resources/imgs/miru.png','https://www.instagram.com/miru__cafe/','커피박람회보다 원두종류가 많다. 핸드드립 한잔에 3천원? 안가고 뭐함?'),(10,35.184968833050526,128.774022626168,'경남 김해시 대청계곡길 188-35','50991 대청동 787-2',NULL,'100110101','에븐','../../resources/imgs/even.png','https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EA%B9%80%ED%95%B4+%EC%97%90%EB%B8%90','전통 한옥 인테리어의 산속 카페. 자연인 매니아라면 가보는것도');
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +267,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`userId`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `nickname_UNIQUE` (`nickname`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +276,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (8,'um','1112','김찬호',NULL,NULL),(9,'aa','1234','엄준식',NULL,NULL),(11,'aaa','1234','엄준식a',NULL,NULL),(13,'aaaa','1234','엄준식aa',NULL,NULL),(14,'aaaaa','1234','엄준식aaa',NULL,NULL),(15,'aaaaaa','1234','엄준식aaaa',NULL,NULL),(18,'aaaaaaa','1234','엄준식aaaaa',NULL,NULL),(19,'aaasdaaaaa','1234','엄준식aaasadaa',NULL,NULL),(20,'asd','1112','유저81',NULL,NULL);
+INSERT INTO `user` VALUES (8,'um','1112','김찬호',NULL,'C:/upload/temp3/a9590b89-6837-4ca7-bb06-a1c5a35e42cf_Bongo_Cat_Redra112w.png'),(9,'aa','1234','엄준식',NULL,NULL),(11,'aaa','1234','엄준식a',NULL,NULL),(13,'aaaa','1234','엄준식aa',NULL,NULL),(14,'aaaaa','1234','엄준식aaa',NULL,NULL),(15,'aaaaaa','1234','엄준식aaaa',NULL,NULL),(18,'aaaaaaa','1234','엄준식aaaaa',NULL,NULL),(19,'aaasdaaaaa','1234','엄준식aaasadaa',NULL,NULL),(20,'asd','1112','유저81',NULL,NULL),(22,'asdsadsad','1112','유저91',NULL,NULL),(23,'asdasd','1112','유저101',NULL,NULL),(24,'sadsa','1112','유저111',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -288,4 +289,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-31  1:40:09
+-- Dump completed on 2023-08-03 18:19:37

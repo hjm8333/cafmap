@@ -4,7 +4,6 @@ import com.cafmap.Utils;
 import com.cafmap.dao.MemDao;
 import com.cafmap.dao.PlaceDao;
 import com.cafmap.dto.BoardDto;
-import com.cafmap.dto.MemDto;
 import com.cafmap.dto.MyPlaceDto;
 import com.cafmap.dto.PlaceDto;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +44,7 @@ public class PlaceServiceImpl implements PlaceService{
             if(category.charAt(3) == '1') tag.append("#앤틱 ");
             if(category.charAt(2) == '1') tag.append("#모던 ");
             if(category.charAt(1) == '1') tag.append("#힙 ");
-            if(tag.toString().equals("100000000")) tag.append("카페");
+            if(category.equals("100000000")) tag.append("#태그없음");
             list.get(i).setCategory(tag.toString());
 
             double avgScore = 0;
@@ -77,7 +76,7 @@ public class PlaceServiceImpl implements PlaceService{
             if(category.charAt(3) == '1') tag.append("#앤틱 ");
             if(category.charAt(2) == '1') tag.append("#모던 ");
             if(category.charAt(1) == '1') tag.append("#힙 ");
-            if(tag.toString().equals("100000000")) tag.append("카페");
+            if(category.equals("100000000")) tag.append("#태그없음");
             list.get(i).setCategory(tag.toString());
         }
         return list;
@@ -153,5 +152,15 @@ public class PlaceServiceImpl implements PlaceService{
         dao.writePlace(params);
 
         log.info("UserService ===> write ===> end");
+    }
+
+    @Override
+    public int lastMyPlaceId(int userId) {
+        return dao.lastMyPlaceId(userId);
+    }
+
+    @Override
+    public void placeDelete(int placeId) {
+        dao.placeDelete(placeId);
     }
 }
