@@ -4,7 +4,7 @@
 		 pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>지도</title>
+	<title>Cafap</title>
 	<%@ include file="../views/common/navbar.jsp" %>
 </head>
 <style>
@@ -292,6 +292,11 @@
 		font-size: 1.5em;
 	}
 
+	.img-circle {
+		width: 35px;
+		height: 35px;
+	}
+
 
 </style>
 
@@ -372,6 +377,9 @@
 
 		var map = new kakao.maps.Map(container, options);
 
+
+		// 클릭시 좌표표시 함수
+		/*
 		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 
 			// 클릭한 위도, 경도 정보를 가져옵니다
@@ -384,6 +392,7 @@
 			resultDiv.innerHTML = message;
 
 		});
+		 */
 
 		var startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 마커이미지의 주소입니다
 			startSize = new kakao.maps.Size(50, 45), // 마커이미지의 크기입니다
@@ -567,6 +576,14 @@
 										<c:forEach items="${dto.boardDtoList}" var="boardDto">
 											<div sp-edit="text" style="text-align:left;" class="initialize" area="before" draggable="false">
 												<span sp-font="18" style="color:black; margin-bottom: 3px;" draggable="false">
+													<c:choose>
+														<c:when test="${boardDto.memDto.imgPath == null}">
+															<img src="../../resources/imgs/userDefaultIcon.png" class="img-circle">
+														</c:when>
+														<c:otherwise>
+															<img src="/display?fileName=${boardDto.memDto.imgPath}" class="img-circle">
+														</c:otherwise>
+													</c:choose>
 													<c:choose>
 														<c:when test="${boardDto.memDto.userId == userDto.userId}">
 															<span style="font-weight: 900; color: #b67f5f">

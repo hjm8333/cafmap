@@ -3,7 +3,7 @@
 		 pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>login</title>
+	<title>MyCafap</title>
 	<%@ include file="../views/common/navbar.jsp" %>
 </head>
 <style>

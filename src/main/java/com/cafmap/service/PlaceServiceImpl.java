@@ -40,7 +40,7 @@ public class PlaceServiceImpl implements PlaceService{
             if(category.charAt(7) == '1') tag.append("#자가배전 ");
             if(category.charAt(6) == '1') tag.append("#약배전 ");
             if(category.charAt(5) == '1') tag.append("#강배전 ");
-            if(category.charAt(4) == '1') tag.append("#베이커리 ");
+            if(category.charAt(4) == '1') tag.append("#디저트맛집 ");
             if(category.charAt(3) == '1') tag.append("#앤틱 ");
             if(category.charAt(2) == '1') tag.append("#모던 ");
             if(category.charAt(1) == '1') tag.append("#힙 ");
@@ -72,7 +72,7 @@ public class PlaceServiceImpl implements PlaceService{
             if(category.charAt(7) == '1') tag.append("#자가배전 ");
             if(category.charAt(6) == '1') tag.append("#약배전 ");
             if(category.charAt(5) == '1') tag.append("#강배전 ");
-            if(category.charAt(4) == '1') tag.append("#베이커리 ");
+            if(category.charAt(4) == '1') tag.append("#디저트맛집 ");
             if(category.charAt(3) == '1') tag.append("#앤틱 ");
             if(category.charAt(2) == '1') tag.append("#모던 ");
             if(category.charAt(1) == '1') tag.append("#힙 ");

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<title>info</title>
+	<title>Cafap MyInfo</title>
 	<%@ include file="../views/common/navbar.jsp" %>
 </head>
 <%--a87543beac34ad8d2b278a24584916c9 카카오 key--%>

@@ -3,7 +3,7 @@
 		 pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>login</title>
+	<title>Cafap Login</title>
 	<%@ include file="../views/common/navbar.jsp" %>
 </head>
 <%--a87543beac34ad8d2b278a24584916c9 카카오 key--%>
