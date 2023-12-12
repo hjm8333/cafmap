@@ -87,4 +87,88 @@ https://www.canva.com/design/DAFqftFdggk/I8ObStampda6dWG408F4qw/view?utm_content
 ![image](https://github.com/hjm8333/cafmap/assets/35636560/63fb1300-8c0b-4b61-986f-f42a6ffc4f1e)
 
 
+## 6️⃣ 화면 구현
+
+## 회원
+<table>
+
+<tr>
+  <td align="center">회원가입/로그인</td>
+  <td align="center">회원정보 수정</td>
+</tr>
+<tr>
+  <td>
+	  
+![image](https://github.com/hjm8333/cafmap/assets/35636560/55756891-8f96-4cd2-8f0c-997688d0ba75)
+      
+  </td>
+  <td>
+      
+![image](https://github.com/hjm8333/cafmap/assets/35636560/a0221e0e-83f2-4a4c-906b-698f259fe1d5)
+
+  </td>
+</tr>
+
+<tr>
+  <td align="center">공지작성</td>
+  <td align="center">문의목록</td>
+</tr>
+<tr>
+  <td>
+	  
+![관리자-공지작성png](https://github.com/vgbhn37/HallOfArt/assets/35636560/47485d50-3fa0-463c-bc4e-e9e60607819c)
+      
+  </td>
+  <td>
+	  
+![관리자-문의목록](https://github.com/vgbhn37/HallOfArt/assets/35636560/516aed54-1ead-4cac-995c-d98f645f6a3f)
+
+  </td>
+</tr>
+
+</table>
+
+## 카페 지도
+<table>
+	
+<tr>
+  <td align="center">지도 메인</td>
+  <td align="center">카페 조회</td>
+</tr>
+<tr>
+  <td>
+	  
+![image](https://github.com/hjm8333/cafmap/assets/35636560/60cf6b2e-01b4-4e5d-9513-e142edf75713)
+      
+  </td>
+  <td>
+      
+![image](https://github.com/hjm8333/cafmap/assets/35636560/fd9e4a57-6ffd-4606-a656-adf92e92830d)
+
+  </td>
+</tr>
+
+</table>
+
+## 나만의 카페 지도
+<table>
+	
+<tr>
+  <td align="center">나만의 카페 등록</td>
+  <td align="center">나만의 카페 조회/수정</td>
+</tr>
+<tr>
+  <td>
+	  
+![image](https://github.com/hjm8333/cafmap/assets/35636560/9d2104c2-ea68-4e33-b81d-63022872ad9d)
+      
+  </td>
+  <td>
+      
+![image](https://github.com/hjm8333/cafmap/assets/35636560/067de670-0122-4746-884c-427d2e667aba)
+
+  </td>
+</tr>
+
+</table>
 
